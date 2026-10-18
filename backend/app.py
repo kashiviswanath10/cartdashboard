@@ -113,13 +113,34 @@ def create_app(config_class=Config):
         frontend_dir = app.config.get("FRONTEND_DIR", BASE_DIR / "frontend")
         return send_from_directory(str(frontend_dir), "index.html")
 
-    # Static frontend files (CSS, JS, Assets)
+    # Clean URL Page Routes
+    @app.route("/revenue", methods=["GET"])
+    def serve_revenue():
+        return send_from_directory(str(app.config.get("FRONTEND_DIR", BASE_DIR / "frontend")), "revenue.html")
+
+    @app.route("/categories", methods=["GET"])
+    def serve_categories():
+        return send_from_directory(str(app.config.get("FRONTEND_DIR", BASE_DIR / "frontend")), "categories.html")
+
+    @app.route("/regions", methods=["GET"])
+    def serve_regions():
+        return send_from_directory(str(app.config.get("FRONTEND_DIR", BASE_DIR / "frontend")), "regions.html")
+
+    @app.route("/reports", methods=["GET"])
+    def serve_reports():
+        return send_from_directory(str(app.config.get("FRONTEND_DIR", BASE_DIR / "frontend")), "reports.html")
+
+    # Static frontend files (HTML pages, CSS, JS, Assets)
     @app.route("/<path:path>", methods=["GET"])
     def serve_frontend_static(path):
         frontend_dir = app.config.get("FRONTEND_DIR", BASE_DIR / "frontend")
         file_path = frontend_dir / path
         if file_path.exists() and file_path.is_file():
             return send_from_directory(str(frontend_dir), path)
+        # Support extensionless routing (e.g. /revenue -> revenue.html)
+        html_path = frontend_dir / f"{path}.html"
+        if html_path.exists() and html_path.is_file():
+            return send_from_directory(str(frontend_dir), f"{path}.html")
         return jsonify({"status": "error", "message": f"Resource not found: {path}"}), 404
 
     # JSON Error Handlers for API endpoints

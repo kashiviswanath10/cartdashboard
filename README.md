@@ -98,28 +98,25 @@ CartCompass-BI follows a clean, modular tiered architecture:
 
 ```
 CartCompass-BI/
-├── .gitignore                      # Git ignore rules (DBs, pycache, envs)
-├── .env.example                    # Sample environment configurations
-├── README.md                       # Complete documentation & run guide
-├── requirements.txt                # Python package dependencies
-├── cartcompass.db                  # SQLite runtime database
-├── data/
-│   ├── raw/                        # Generated raw CSV datasets
-│   │   ├── products.csv
-│   │   ├── orders.csv
-│   │   └── order_items.csv
-│   └── processed/                  # Cleaned master tables & summaries
-│       ├── products_clean.csv
-│       ├── orders_clean.csv
-│       ├── order_items_clean.csv
-│       ├── ecommerce_master_clean.csv
-│       └── kpis_summary.json
-├── database/
-│   ├── schema.sql                  # DDL schema with constraints & indexes
-│   └── init_db.py                  # Synthetic data generator & DB initializer
+├── frontend/
+│   ├── index.html                  # Page 1: Overview Dashboard
+│   ├── revenue.html                # Page 2: Revenue Analytics
+│   ├── categories.html             # Page 3: Categories Performance
+│   ├── regions.html                # Page 4: Regional Performance
+│   ├── reports.html                # Page 5: Executive Reports & Audit
+│   ├── css/
+│   │   └── style.css               # Shared executive dark design system (reference UI)
+│   ├── js/
+│   │   ├── common.js               # Universal API client, demo fallback, currency toggle
+│   │   ├── overview.js             # Overview page logic
+│   │   ├── revenue.js              # Revenue analytics logic
+│   │   ├── categories.js           # Category breakdown logic
+│   │   ├── regions.js              # Regional performance logic
+│   │   └── reports.js              # Executive report & automated insights
+│   └── assets/                     # Static web assets
 ├── backend/
-│   ├── app.py                      # Flask factory, routes, and frontend server
-│   ├── config.py                   # App configurations & environment defaults
+│   ├── app.py                      # Flask app factory, API routes & multi-page server
+│   ├── config.py                   # App configuration & environment defaults
 │   ├── db.py                       # SQLite connection manager with FK enforcement
 │   ├── routes/
 │   │   ├── kpis.py                 # GET /api/kpis
@@ -128,28 +125,26 @@ CartCompass-BI/
 │   │   └── regions.py              # GET /api/regions
 │   └── services/
 │       └── analytics.py            # Business logic, SQL queries, period growth
+├── database/
+│   ├── schema.sql                  # DDL schema with constraints & indexes
+│   └── init_db.py                  # Synthetic data generator & DB initializer
 ├── analysis/
 │   ├── clean_data.py               # Data validation, cleaning, and export
 │   ├── calculate_kpis.py           # Pandas KPI calculations & summaries
 │   ├── generate_charts.py          # Static Matplotlib chart generation
 │   └── outputs/                    # Exported high-res PNG static charts
-│       ├── monthly_revenue_trend.png
-│       ├── category_revenue_distribution.png
-│       ├── regional_performance.png
-│       ├── order_status_breakdown.png
-│       └── period_comparison.png
-├── frontend/
-│   ├── index.html                  # Dashboard UI layout
-│   ├── css/
-│   │   └── style.css               # Modern design tokens, cards, responsive layout
-│   ├── js/
-│   │   └── script.js               # Chart.js controller, currency switcher, filters
-│   └── assets/                     # Icons and static web assets
+├── data/
+│   ├── raw/                        # Generated raw CSV datasets
+│   └── processed/                  # Cleaned master tables & summaries
 ├── tests/
 │   ├── test_kpis.py                # Unit tests for KPI formulas & edge cases
 │   └── test_api.py                 # Integration tests for Flask endpoints & SQLite
-└── docs/
-    └── KPI_DEFINITIONS.md          # Comprehensive KPI formulas & methodology
+├── docs/
+│   └── KPI_DEFINITIONS.md          # Comprehensive KPI formulas & methodology
+├── .gitignore                      # Git ignore rules (DBs, pycache, envs)
+├── .env.example                    # Sample environment configurations
+├── requirements.txt                # Python package dependencies
+└── README.md                       # Complete documentation & run guide
 ```
 
 ---

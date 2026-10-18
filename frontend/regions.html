@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CartCompass BI - Regional Performance</title>
+    <meta name="description" content="Geographical sales distribution, regional order density, and fulfillment hub statistics.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                </div>
+                <div class="brand-text">
+                    <h2>CartCompass</h2>
+                    <span class="brand-tag">BI Executive</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-item">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
+                    <span>Overview</span>
+                </a>
+                <a href="revenue.html" class="nav-item">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                    <span>Revenue Analytics</span>
+                </a>
+                <a href="categories.html" class="nav-item">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                    <span>Categories</span>
+                </a>
+                <a href="regions.html" class="nav-item active">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    <span>Regions</span>
+                </a>
+                <a href="reports.html" class="nav-item">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                    <span>Reports</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-widget">
+                <div class="widget-label">Geographic Coverage</div>
+                <div class="widget-val">5 Territories</div>
+                <div class="widget-progress-bg">
+                    <div class="widget-progress-bar" style="width: 88%;"></div>
+                </div>
+                <div class="widget-subtext">
+                    <span>Regional Balance</span>
+                    <span>Optimized</span>
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                <div>
+                    <span class="status-indicator" id="system-status-indicator"></span>
+                    <span id="system-status-text">Connecting...</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="mobile-toggle" id="mobile-sidebar-toggle" aria-label="Toggle Navigation">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                    </button>
+                    <div class="header-title">
+                        <h1>Regional Sales Performance</h1>
+                        <p class="subtitle">Geographical Fulfillment Hubs, Regional Orders &amp; Basket Values</p>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <select class="filter-pill" id="period-filter">
+                        <option value="all" selected>All Time</option>
+                        <option value="12m">Last 12 Months</option>
+                        <option value="6m">Last 6 Months</option>
+                        <option value="q4">Q4 2025</option>
+                    </select>
+
+                    <select class="filter-pill" id="status-filter">
+                        <option value="delivered" selected>Delivered (Realized)</option>
+                        <option value="all_active">All Active Orders</option>
+                    </select>
+
+                    <div class="currency-switch">
+                        <button type="button" class="curr-btn active" id="curr-inr">₹ INR</button>
+                        <button type="button" class="curr-btn" id="curr-usd">$ USD</button>
+                    </div>
+
+                    <button type="button" class="btn btn-orange" id="btn-print-report">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        <span>Export PDF</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Mode Notice Banner -->
+            <div class="mode-banner">
+                <div>
+                    <strong>Regional Intelligence:</strong> Aggregated revenue by customer delivery territory. Highlights high-value geographical hubs and logistics throughput.
+                </div>
+                <span class="mode-badge" id="mode-badge">Checking Status...</span>
+            </div>
+
+            <!-- Regional Highlights Row -->
+            <div class="kpi-row">
+                <!-- Top Revenue Region -->
+                <div class="kpi-card">
+                    <div class="kpi-top">
+                        <span class="kpi-title">Lead Revenue Hub</span>
+                        <div class="mini-ring cyan">#1</div>
+                    </div>
+                    <div class="kpi-value" id="top-reg-val">--</div>
+                    <div class="kpi-bottom">
+                        <strong id="top-reg-name">--</strong>
+                        <span class="kpi-trend positive" id="top-reg-share">--</span>
+                    </div>
+                </div>
+
+                <!-- Top AOV Region -->
+                <div class="kpi-card">
+                    <div class="kpi-top">
+                        <span class="kpi-title">Highest Average Order</span>
+                        <div class="mini-ring orange">AOV</div>
+                    </div>
+                    <div class="kpi-value" id="top-aov-val">--</div>
+                    <div class="kpi-bottom">
+                        <strong id="top-aov-reg-name">--</strong>
+                        <span id="top-aov-sub">--</span>
+                    </div>
+                </div>
+
+                <!-- Geographic Footprint -->
+                <div class="kpi-card">
+                    <div class="kpi-top">
+                        <span class="kpi-title">Active Territories</span>
+                        <div class="mini-ring emerald">HUB</div>
+                    </div>
+                    <div class="kpi-value" id="total-reg-count">5 Hubs</div>
+                    <div class="kpi-bottom">
+                        <span>Fulfillment Load:</span>
+                        <strong id="total-reg-orders">--</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Grid (Regional Sales Bars & Order Volume vs AOV) -->
+            <div class="charts-grid-2">
+                <!-- Regional Horizontal Bar Chart -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title-group">
+                            <h3>Regional Commercial Revenue ($M / ₹)</h3>
+                            <p class="card-subtitle">Realized net proceeds grouped across fulfillment territories</p>
+                        </div>
+                        <span class="badge-pill">Target: 85%</span>
+                    </div>
+                    <div class="canvas-wrapper canvas-wrapper-lg">
+                        <canvas id="regSalesChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Regional Volume & AOV Comparison -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title-group">
+                            <h3>Order Volume vs. Average Basket Value</h3>
+                            <p class="card-subtitle">Dual-axis analysis of demand density and order value</p>
+                        </div>
+                        <span class="badge-pill">Dual Axis</span>
+                    </div>
+                    <div class="canvas-wrapper canvas-wrapper-lg">
+                        <canvas id="regAovChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Regional Sales Table -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title-group">
+                        <h3>Geographical Performance Audit</h3>
+                        <p class="card-subtitle">Detailed audit of regional sales volume, unit shipments, average basket value, and target attainment</p>
+                    </div>
+                </div>
+                <div class="table-wrapper">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Regional Territory</th>
+                                <th>Net Realized Revenue</th>
+                                <th>Gross Sales</th>
+                                <th>Total Orders</th>
+                                <th>Units Shipped</th>
+                                <th>Average Order Value</th>
+                                <th>Regional Share</th>
+                                <th>Target Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reg-table-body">
+                            <tr>
+                                <td colspan="8" style="text-align: center; color: var(--text-muted); padding: 20px;">Loading regional metrics...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer class="dashboard-footer">
+                <div>
+                    <strong>CartCompass-BI</strong> &bull; E-Commerce Management Intelligence Cockpit
+                </div>
+                <div>
+                    Regional Performance Module &bull; Territory Distribution
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Application Scripts -->
+    <script src="js/common.js"></script>
+    <script src="js/regions.js"></script>
+</body>
+</html>
