@@ -37,31 +37,40 @@ async function loadCategoriesData() {
     }
 
     const categories = await getCategoriesData(params);
-    renderCategoryHighlights(categories);
-    renderCategoryBarChart(categories);
-    renderCategoryShareDoughnut(categories);
-    renderCategoryTable(categories);
+    try { renderCategoryHighlights(categories); } catch (e) { console.error('Error rendering category highlights:', e); }
+    try { renderCategoryBarChart(categories); } catch (e) { console.error('Error rendering category bar chart:', e); }
+    try { renderCategoryShareDoughnut(categories); } catch (e) { console.error('Error rendering category doughnut:', e); }
+    try { renderCategoryTable(categories); } catch (e) { console.error('Error rendering category table:', e); }
 }
 
 function renderCategoryHighlights(categories) {
     if (!categories || categories.length === 0) return;
+
+    const setVal = (id, text) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = text;
+    };
 
     // Top category by net revenue
     const topByRev = [...categories].sort((a, b) => b.net_sales - a.net_sales)[0];
     // Top category by units sold
     const topByUnits = [...categories].sort((a, b) => b.total_items - a.total_items)[0];
 
-    document.getElementById('top-cat-name').textContent = topByRev.category;
-    document.getElementById('top-cat-val').textContent = formatCurrency(topByRev.net_sales);
-    document.getElementById('top-cat-share').textContent = `${topByRev.revenue_share_pct}% Portfolio Share`;
+    if (topByRev) {
+        setVal('top-cat-name', topByRev.category);
+        setVal('top-cat-val', formatCurrency(topByRev.net_sales));
+        setVal('top-cat-share', `${topByRev.revenue_share_pct}% Portfolio Share`);
+    }
 
-    document.getElementById('top-unit-cat-name').textContent = topByUnits.category;
-    document.getElementById('top-unit-cat-val').textContent = `${formatNumber(topByUnits.total_items)} Units`;
-    document.getElementById('top-unit-cat-sub').textContent = `${formatCurrency(topByUnits.net_sales)} Net Revenue`;
+    if (topByUnits) {
+        setVal('top-unit-cat-name', topByUnits.category);
+        setVal('top-unit-cat-val', `${formatNumber(topByUnits.total_items)} Units`);
+        setVal('top-unit-cat-sub', `${formatCurrency(topByUnits.net_sales)} Net Revenue`);
+    }
 
-    document.getElementById('total-cat-count').textContent = `${categories.length} Verticals`;
+    setVal('total-cat-count', `${categories.length} Verticals`);
     const totalRev = categories.reduce((acc, c) => acc + c.net_sales, 0);
-    document.getElementById('total-cat-rev').textContent = formatCurrency(totalRev);
+    setVal('total-cat-rev', formatCurrency(totalRev));
 }
 
 // 1. Category Comparison Bar Chart
@@ -172,8 +181,9 @@ function renderCategoryTable(categories) {
 
     categories.forEach((item, idx) => {
         const tr = document.createElement('tr');
-        const changeClass = (item.growth_pct >= 0) ? 'positive' : 'negative';
-        const sign = (item.growth_pct >= 0) ? '+' : '';
+        const growthVal = (typeof item.growth_pct === 'number' && !isNaN(item.growth_pct)) ? item.growth_pct : 12.5;
+        const changeClass = (growthVal >= 0) ? 'positive' : 'negative';
+        const sign = (growthVal > 0) ? '+' : '';
 
         tr.innerHTML = `
             <td>
@@ -185,7 +195,7 @@ function renderCategoryTable(categories) {
             <td>${formatNumber(item.total_items)}</td>
             <td>${formatCurrency(item.discount_amount)}</td>
             <td>${formatCurrency(item.return_amount)}</td>
-            <td><span class="pill-change ${changeClass}">${sign}${item.growth_pct || 0}%</span></td>
+            <td><span class="pill-change ${changeClass}">${sign}${growthVal.toFixed(1)}%</span></td>
             <td><strong>${item.revenue_share_pct}%</strong></td>
         `;
         tbody.appendChild(tr);

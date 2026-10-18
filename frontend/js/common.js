@@ -118,7 +118,7 @@ function formatNumber(val) {
 }
 
 function formatPercent(val) {
-    if (val === null || val === undefined || isNaN(val)) return 'N/A';
+    if (val === null || val === undefined || val === '' || isNaN(Number(val))) return 'N/A';
     const num = Number(val);
     const sign = num > 0 ? '+' : '';
     return `${sign}${num.toFixed(1)}%`;

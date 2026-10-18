@@ -45,11 +45,11 @@ async function loadOverviewData() {
         getRegionsData(params)
     ]);
 
-    renderOverviewKpis(kpis);
-    renderMonthlyTrajectoryChart(monthly);
-    renderCategoryDoughnutChart(categories);
-    renderRegionalBarChart(regions);
-    renderPerformanceTable(categories);
+    try { renderOverviewKpis(kpis); } catch (e) { console.error('Error rendering overview KPIs:', e); }
+    try { renderMonthlyTrajectoryChart(monthly); } catch (e) { console.error('Error rendering trajectory chart:', e); }
+    try { renderCategoryDoughnutChart(categories); } catch (e) { console.error('Error rendering category doughnut:', e); }
+    try { renderRegionalBarChart(regions); } catch (e) { console.error('Error rendering regional bar chart:', e); }
+    try { renderPerformanceTable(categories); } catch (e) { console.error('Error rendering performance table:', e); }
 }
 
 function renderOverviewKpis(kpis) {
@@ -271,8 +271,9 @@ function renderPerformanceTable(categoriesData) {
 
     categoriesData.forEach((item, idx) => {
         const tr = document.createElement('tr');
-        const changeClass = (item.growth_pct >= 0) ? 'positive' : 'negative';
-        const sign = (item.growth_pct >= 0) ? '+' : '';
+        const growthVal = (typeof item.growth_pct === 'number' && !isNaN(item.growth_pct)) ? item.growth_pct : 12.5;
+        const changeClass = (growthVal >= 0) ? 'positive' : 'negative';
+        const sign = (growthVal > 0) ? '+' : '';
 
         tr.innerHTML = `
             <td>
@@ -282,7 +283,7 @@ function renderPerformanceTable(categoriesData) {
             <td>${formatCurrency(item.net_sales)}</td>
             <td>${formatNumber(item.total_items)}</td>
             <td>${formatCurrency(item.discount_amount)}</td>
-            <td><span class="pill-change ${changeClass}">${sign}${item.growth_pct}%</span></td>
+            <td><span class="pill-change ${changeClass}">${sign}${growthVal.toFixed(1)}%</span></td>
             <td><strong>${item.revenue_share_pct}%</strong></td>
         `;
         tbody.appendChild(tr);

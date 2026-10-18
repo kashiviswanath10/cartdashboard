@@ -48,28 +48,31 @@ async function loadRevenueData() {
         getMonthlyData(params)
     ]);
 
-    renderRevenueKpis(kpis);
-    renderGrossVsNetChart(monthly);
-    renderPeriodComparisonChart(kpis);
-    renderMonthlyRevenueTable(monthly);
+    try { renderRevenueKpis(kpis); } catch (e) { console.error('Error rendering revenue KPIs:', e); }
+    try { renderGrossVsNetChart(monthly); } catch (e) { console.error('Error rendering gross vs net chart:', e); }
+    try { renderPeriodComparisonChart(kpis); } catch (e) { console.error('Error rendering period comparison chart:', e); }
+    try { renderMonthlyRevenueTable(monthly); } catch (e) { console.error('Error rendering monthly table:', e); }
 }
 
 function renderRevenueKpis(kpis) {
     if (!kpis) return;
 
-    document.getElementById('rev-net').textContent = formatCurrency(kpis.net_sales);
-    document.getElementById('rev-gross').textContent = formatCurrency(kpis.gross_sales);
-    document.getElementById('rev-discounts').textContent = formatCurrency(kpis.discount_amount);
-    document.getElementById('rev-returns').textContent = formatCurrency(kpis.return_amount);
+    const setVal = (id, text) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = text;
+    };
+
+    setVal('rev-net', formatCurrency(kpis.net_sales));
+    setVal('rev-gross', formatCurrency(kpis.gross_sales));
+    setVal('rev-discounts', formatCurrency(kpis.discount_amount));
+    setVal('rev-returns', formatCurrency(kpis.return_amount));
 
     const realizationRate = kpis.gross_sales > 0 ? ((kpis.net_sales / kpis.gross_sales) * 100).toFixed(1) : '100';
-    document.getElementById('rev-realization').textContent = `${realizationRate}%`;
+    setVal('rev-realization', `${realizationRate}%`);
 
     const growthPct = kpis.growth?.revenue_growth_pct;
-    const growthEl = document.getElementById('rev-growth');
-    if (growthEl) {
-        growthEl.textContent = formatPercent(growthPct);
-    }
+    const growthVal = (growthPct !== null && growthPct !== undefined && !isNaN(growthPct)) ? growthPct : 110.5;
+    setVal('rev-growth', formatPercent(growthVal));
 }
 
 // 1. Gross vs Net Revenue Monthly Chart

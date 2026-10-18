@@ -37,14 +37,19 @@ async function loadRegionsData() {
     }
 
     const regions = await getRegionsData(params);
-    renderRegionalHighlights(regions);
-    renderRegionalHorizontalChart(regions);
-    renderRegionalAovChart(regions);
-    renderRegionalTable(regions);
+    try { renderRegionalHighlights(regions); } catch (e) { console.error('Error rendering regional highlights:', e); }
+    try { renderRegionalHorizontalChart(regions); } catch (e) { console.error('Error rendering regional horizontal chart:', e); }
+    try { renderRegionalAovChart(regions); } catch (e) { console.error('Error rendering regional AOV chart:', e); }
+    try { renderRegionalTable(regions); } catch (e) { console.error('Error rendering regional table:', e); }
 }
 
 function renderRegionalHighlights(regions) {
     if (!regions || regions.length === 0) return;
+
+    const setVal = (id, text) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = text;
+    };
 
     // Top region by net revenue
     const topByRev = [...regions].sort((a, b) => b.net_sales - a.net_sales)[0];
@@ -52,16 +57,20 @@ function renderRegionalHighlights(regions) {
     const topByAov = [...regions].sort((a, b) => b.average_order_value - a.average_order_value)[0];
     const totalOrders = regions.reduce((acc, r) => acc + r.total_orders, 0);
 
-    document.getElementById('top-reg-name').textContent = topByRev.region;
-    document.getElementById('top-reg-val').textContent = formatCurrency(topByRev.net_sales);
-    document.getElementById('top-reg-share').textContent = `${topByRev.revenue_share_pct}% Regional Share`;
+    if (topByRev) {
+        setVal('top-reg-name', topByRev.region);
+        setVal('top-reg-val', formatCurrency(topByRev.net_sales));
+        setVal('top-reg-share', `${topByRev.revenue_share_pct}% Regional Share`);
+    }
 
-    document.getElementById('top-aov-reg-name').textContent = topByAov.region;
-    document.getElementById('top-aov-val').textContent = formatCurrency(topByAov.average_order_value);
-    document.getElementById('top-aov-sub').textContent = `${formatNumber(topByAov.total_orders)} Orders Fulfilled`;
+    if (topByAov) {
+        setVal('top-aov-reg-name', topByAov.region);
+        setVal('top-aov-val', formatCurrency(topByAov.average_order_value));
+        setVal('top-aov-sub', `${formatNumber(topByAov.total_orders)} Orders Fulfilled`);
+    }
 
-    document.getElementById('total-reg-count').textContent = `${regions.length} Hubs`;
-    document.getElementById('total-reg-orders').textContent = `${formatNumber(totalOrders)} Total Orders`;
+    setVal('total-reg-count', `${regions.length} Hubs`);
+    setVal('total-reg-orders', `${formatNumber(totalOrders)} Total Orders`);
 }
 
 // 1. Regional Sales Horizontal Bar Chart (Matching Reference Image)

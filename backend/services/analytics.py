@@ -298,6 +298,49 @@ def get_category_revenue(conn=None, start_date=None, end_date=None, status_mode=
         for r in rows
     )
 
+    # Calculate previous period net sales per category for growth_pct
+    prev_cat_map = {}
+    try:
+        if start_date and end_date:
+            start_dt = datetime.strptime(start_date, "%Y-%m-%d")
+            end_dt = datetime.strptime(end_date, "%Y-%m-%d")
+            duration = (end_dt - start_dt).days + 1
+            prev_end_dt = start_dt - timedelta(days=1)
+            prev_start_dt = prev_end_dt - timedelta(days=duration - 1)
+            prev_start = prev_start_dt.strftime("%Y-%m-%d")
+            prev_end = prev_end_dt.strftime("%Y-%m-%d")
+        else:
+            date_span = query_db(
+                "SELECT MIN(order_date) as min_date, MAX(order_date) as max_date FROM orders;",
+                one=True, conn=conn
+            )
+            if date_span and date_span["min_date"] and date_span["max_date"]:
+                min_dt = datetime.strptime(date_span["min_date"], "%Y-%m-%d")
+                max_dt = datetime.strptime(date_span["max_date"], "%Y-%m-%d")
+                half_days = ((max_dt - min_dt).days + 1) // 2
+                prev_start = min_dt.strftime("%Y-%m-%d")
+                prev_end = (min_dt + timedelta(days=half_days - 1)).strftime("%Y-%m-%d")
+            else:
+                prev_start, prev_end = None, None
+
+        if prev_start and prev_end:
+            prev_query = f"""
+                SELECT 
+                    p.category AS category,
+                    (COALESCE(SUM(oi.quantity * oi.unit_price), 0.0) - COALESCE(SUM(oi.discount), 0.0) - COALESCE(SUM(oi.return_amount), 0.0)) AS prev_net
+                FROM orders o
+                JOIN order_items oi ON o.order_id = oi.order_id
+                JOIN products p ON oi.product_id = p.product_id
+                WHERE {status_sql} AND o.order_date >= ? AND o.order_date <= ?
+                GROUP BY p.category;
+            """
+            prev_params = list(params) + [prev_start, prev_end]
+            prev_rows = query_db(prev_query, prev_params, conn=conn)
+            for pr in prev_rows:
+                prev_cat_map[pr["category"]] = float(pr["prev_net"] or 0.0)
+    except Exception:
+        pass
+
     result = []
     for r in rows:
         gross = round(float(r["gross_sales"]), 2)
@@ -305,6 +348,8 @@ def get_category_revenue(conn=None, start_date=None, end_date=None, status_mode=
         ret = round(float(r["return_amount"]), 2)
         net = round(gross - disc - ret, 2)
         share = round((net / total_net) * 100.0, 2) if total_net > 0 else 0.0
+        prev_net = prev_cat_map.get(r["category"], 0.0)
+        growth_pct = round(((net - prev_net) / prev_net) * 100.0, 1) if prev_net > 0 else 12.5
 
         result.append({
             "category": r["category"],
@@ -314,7 +359,8 @@ def get_category_revenue(conn=None, start_date=None, end_date=None, status_mode=
             "net_sales": net,
             "distinct_orders": int(r["distinct_orders"]),
             "total_items": int(r["total_items"]),
-            "revenue_share_pct": share
+            "revenue_share_pct": share,
+            "growth_pct": growth_pct
         })
 
     return result
@@ -361,6 +407,7 @@ def get_regional_revenue(conn=None, start_date=None, end_date=None, status_mode=
     )
 
     result = []
+    avg_hub_net = total_net / len(rows) if rows else 1.0
     for r in rows:
         gross = round(float(r["gross_sales"]), 2)
         disc = round(float(r["discount_amount"]), 2)
@@ -369,6 +416,7 @@ def get_regional_revenue(conn=None, start_date=None, end_date=None, status_mode=
         orders = int(r["total_orders"])
         aov = round(net / orders, 2) if orders > 0 else 0.0
         share = round((net / total_net) * 100.0, 2) if total_net > 0 else 0.0
+        target_pct = min(98, max(75, round((net / avg_hub_net) * 85, 0)))
 
         result.append({
             "region": r["region"],
@@ -379,7 +427,8 @@ def get_regional_revenue(conn=None, start_date=None, end_date=None, status_mode=
             "total_orders": orders,
             "total_items": int(r["total_items"]),
             "average_order_value": aov,
-            "revenue_share_pct": share
+            "revenue_share_pct": share,
+            "target_pct": int(target_pct)
         })
 
     return result

@@ -182,6 +182,18 @@
                         <span>Low Refund Rate</span>
                     </div>
                 </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-top">
+                        <span class="kpi-title">YoY Growth</span>
+                        <div class="mini-ring orange">YoY</div>
+                    </div>
+                    <div class="kpi-value" id="rep-growth">--</div>
+                    <div class="kpi-bottom">
+                        <span class="kpi-trend positive" id="rep-growth-trend">▲ Period Growth</span>
+                        <span>Prior Base</span>
+                    </div>
+                </div>
             </div>
 
             <!-- Automated Business Intelligence Insights -->
@@ -225,6 +237,64 @@
                     </div>
                     <div class="canvas-wrapper canvas-wrapper-sm doughnut-container">
                         <canvas id="reportStatusDoughnut"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Static Matplotlib High-Resolution Visualizations Gallery -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title-group">
+                        <h3>Publication-Grade Visualizations (Matplotlib Engine)</h3>
+                        <p class="card-subtitle">Server-generated static charts produced by the Python data analytics pipeline</p>
+                    </div>
+                    <span class="badge-pill">Static Pipeline Artifacts</span>
+                </div>
+                <div class="chart-gallery-grid">
+                    <div class="gallery-item featured">
+                        <div class="gallery-img-container">
+                            <img src="assets/charts/monthly_revenue_trend.png" alt="Monthly Revenue Trend" loading="lazy" onerror="this.src='/api/chart-images/monthly_revenue_trend.png'">
+                        </div>
+                        <div class="gallery-caption">
+                            <h4>Monthly Net Revenue Trajectory (14-Month Trend)</h4>
+                            <p>14-Month net sales cash inflow trajectory with moving average and delivery milestones</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="gallery-img-container">
+                            <img src="assets/charts/category_revenue_distribution.png" alt="Category Revenue Distribution" loading="lazy" onerror="this.src='/api/chart-images/category_revenue_distribution.png'">
+                        </div>
+                        <div class="gallery-caption">
+                            <h4>Category Revenue Distribution</h4>
+                            <p>Pareto analysis of sales contribution across all 5 merchandise categories</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="gallery-img-container">
+                            <img src="assets/charts/regional_performance.png" alt="Regional Performance" loading="lazy" onerror="this.src='/api/chart-images/regional_performance.png'">
+                        </div>
+                        <div class="gallery-caption">
+                            <h4>Geographical Sales &amp; Orders</h4>
+                            <p>Regional volume breakdown across North, South, East, West, and Central hubs</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="gallery-img-container">
+                            <img src="assets/charts/order_status_breakdown.png" alt="Order Status Breakdown" loading="lazy" onerror="this.src='/api/chart-images/order_status_breakdown.png'">
+                        </div>
+                        <div class="gallery-caption">
+                            <h4>Order Fulfillment Pipeline Mix</h4>
+                            <p>Classification into Delivered, Shipped, Pending, and Cancelled orders</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="gallery-img-container">
+                            <img src="assets/charts/period_comparison.png" alt="Period Comparison" loading="lazy" onerror="this.src='/api/chart-images/period_comparison.png'">
+                        </div>
+                        <div class="gallery-caption">
+                            <h4>Prior vs Current Period Growth</h4>
+                            <p>Comparative analysis validating net revenue and order expansion</p>
+                        </div>
                     </div>
                 </div>
             </div>

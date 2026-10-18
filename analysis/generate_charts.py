@@ -65,7 +65,7 @@ def generate_monthly_revenue_chart(df):
         lambda g: (g["quantity"] * g["unit_price"] - g["discount"] - g["return_amount"]).sum()
     ).reset_index(name="net_sales")
 
-    fig, ax = plt.subplots(figsize=(11, 5.5), dpi=300)
+    fig, ax = plt.subplots(figsize=(10, 5.625), dpi=300)
     apply_custom_style(ax, "Monthly Net Revenue Trend (Realized Sales)", "Month", "Net Revenue (₹)")
 
     x = range(len(monthly))
@@ -108,7 +108,7 @@ def generate_category_revenue_chart(df):
     )
     cat_summary = delivered_df.groupby("category")["item_net"].sum().sort_values(ascending=True)
 
-    fig, ax = plt.subplots(figsize=(10, 5.5), dpi=300)
+    fig, ax = plt.subplots(figsize=(10, 5.625), dpi=300)
     apply_custom_style(ax, "Revenue by Product Category (Delivered Orders)", "Net Revenue (₹)", "Category")
 
     bars = ax.barh(cat_summary.index, cat_summary.values, color=PALETTE[:len(cat_summary)], height=0.6)
@@ -151,7 +151,7 @@ def generate_regional_performance_chart(df):
         order_count=("order_id", "nunique")
     ).reset_index().sort_values("net_sales", ascending=False)
 
-    fig, ax1 = plt.subplots(figsize=(10, 5.5), dpi=300)
+    fig, ax1 = plt.subplots(figsize=(10, 5.625), dpi=300)
     apply_custom_style(ax1, "Regional Performance: Net Sales & Orders", "Region", "Net Revenue (₹)")
 
     x = np.arange(len(reg_summary))
@@ -194,7 +194,7 @@ def generate_order_status_chart(df):
     counts = status_counts.values
     colors = [EMERALD_GREEN, PRIMARY_BLUE, AMBER_ORANGE, ROSE_RED][:len(labels)]
 
-    fig, ax = plt.subplots(figsize=(7.5, 6), dpi=300)
+    fig, ax = plt.subplots(figsize=(10, 5.625), dpi=300)
     fig.patch.set_facecolor("#ffffff")
 
     wedges, texts, autotexts = ax.pie(
@@ -253,7 +253,7 @@ def generate_period_comparison_chart(df):
     x = np.arange(len(categories))
     width = 0.35
 
-    fig, ax = plt.subplots(figsize=(11, 5.8), dpi=300)
+    fig, ax = plt.subplots(figsize=(10, 5.625), dpi=300)
     apply_custom_style(ax, "Period Comparison: H1 2025 vs H2 2025 Net Revenue by Category", "Category", "Net Revenue (₹)")
 
     rects1 = ax.bar(x - width/2, p1_rev, width, label="H1 2025 (Jan - Jun)", color="#94a3b8")
