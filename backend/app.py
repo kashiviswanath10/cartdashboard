@@ -101,6 +101,12 @@ def create_app(config_class=Config):
         outputs_dir = app.config.get("CHART_OUTPUTS_DIR", BASE_DIR / "analysis" / "outputs")
         return send_from_directory(str(outputs_dir), filename)
 
+    # Documentation Markdown Serving Endpoint
+    @app.route("/docs/<path:filename>", methods=["GET"])
+    def serve_docs(filename):
+        docs_dir = BASE_DIR / "docs"
+        return send_from_directory(str(docs_dir), filename, mimetype="text/markdown; charset=utf-8")
+
     # Root route - serves the dashboard
     @app.route("/", methods=["GET"])
     def serve_dashboard():

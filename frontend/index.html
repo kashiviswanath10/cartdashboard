@@ -464,44 +464,72 @@
             <section class="section-container" id="methodology-section">
                 <div class="card methodology-card">
                     <div class="methodology-header">
-                        <h3>Business Rules & KPI Mathematical Formulations</h3>
-                        <a href="https://github.com" target="_blank" class="doc-link">View docs/KPI_DEFINITIONS.md &rarr;</a>
+                        <div>
+                            <h3>Business Rules & KPI Mathematical Formulations</h3>
+                            <p class="methodology-subtitle">Standardized managerial accounting formulas and order fulfillment policies</p>
+                        </div>
+                        <a href="/docs/KPI_DEFINITIONS.md" target="_blank" class="doc-link" id="view-doc-link">
+                            <span>View docs/KPI_DEFINITIONS.md</span>
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                        </a>
                     </div>
                     <div class="rules-grid">
                         <div class="rule-box">
                             <h4>1. Gross Sales</h4>
-                            <p>$$\sum (\text{Quantity} \times \text{Unit Price})$$</p>
+                            <div class="formula-badge">
+                                <span class="math-symbol">&sum;</span>
+                                <span>(Quantity &times; Unit Price)</span>
+                            </div>
                             <small>Calculated on eligible items prior to promotional discounts and return refunds.</small>
                         </div>
 
                         <div class="rule-box">
                             <h4>2. Net Sales</h4>
-                            <p>$$\text{Gross Sales} - \text{Discounts} - \text{Returns}$$</p>
+                            <div class="formula-badge">
+                                <span>Gross Sales &minus; Discounts &minus; Returns</span>
+                            </div>
                             <small>Reflects actual realized commercial inflow. Guaranteed non-negative per line item.</small>
                         </div>
 
                         <div class="rule-box">
                             <h4>3. Total Orders</h4>
-                            <p>$$\text{Distinct Count}(\text{order\_id})$$</p>
+                            <div class="formula-badge">
+                                <span>Distinct Count (order_id)</span>
+                            </div>
                             <small>Orders with multiple line items are counted exactly once to avoid volume inflation.</small>
                         </div>
 
                         <div class="rule-box">
                             <h4>4. Average Order Value (AOV)</h4>
-                            <p>$$\frac{\text{Net Sales}}{\text{Total Orders}}$$</p>
+                            <div class="formula-badge fraction-badge">
+                                <div class="math-fraction">
+                                    <span class="numerator">Net Sales</span>
+                                    <span class="denominator">Total Orders</span>
+                                </div>
+                            </div>
                             <small>Returns 0.0 safely if eligible order count is zero. Cancelled orders excluded.</small>
                         </div>
 
                         <div class="rule-box">
                             <h4>5. Revenue Growth (%)</h4>
-                            <p>$$\frac{\text{Current Net Sales} - \text{Prior Net Sales}}{\text{Prior Net Sales}} \times 100$$</p>
+                            <div class="formula-badge fraction-badge">
+                                <div class="math-fraction">
+                                    <span class="numerator">Current Net Sales &minus; Prior Net Sales</span>
+                                    <span class="denominator">Prior Net Sales</span>
+                                </div>
+                                <span class="math-multiplier">&times; 100</span>
+                            </div>
                             <small>Identical duration baseline. If prior net sales is zero or null, reports "N/A" rather than infinity.</small>
                         </div>
 
                         <div class="rule-box">
                             <h4>6. Fulfillment Eligibility</h4>
-                            <p><strong>Delivered:</strong> Realized Cash Flows</p>
-                            <small><strong>Shipped & Pending:</strong> In-transit / fulfillment pipeline. <strong>Cancelled:</strong> Strictly omitted from revenue.</small>
+                            <div class="formula-badge eligibility-badge">
+                                <span class="status-chip chip-delivered">Delivered: Realized</span>
+                                <span class="status-chip chip-pipeline">Shipped &amp; Pending: Pipeline</span>
+                                <span class="status-chip chip-cancelled">Cancelled: Excluded</span>
+                            </div>
+                            <small><strong>Delivered</strong> represents finalized cash flows. <strong>Cancelled</strong> orders are strictly omitted from revenue.</small>
                         </div>
                     </div>
                 </div>

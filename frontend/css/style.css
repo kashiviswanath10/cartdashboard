@@ -843,15 +843,30 @@ body {
     font-weight: 700;
 }
 
+.methodology-subtitle {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
 .doc-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     color: var(--primary);
     text-decoration: none;
-    font-size: 0.88rem;
+    font-size: 0.85rem;
     font-weight: 600;
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    background-color: var(--primary-light);
+    transition: all var(--transition-fast);
 }
 
 .doc-link:hover {
-    text-decoration: underline;
+    background-color: #dbeafe;
+    color: var(--primary-hover);
+    text-decoration: none;
 }
 
 .rules-grid {
@@ -865,28 +880,133 @@ body {
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: border-color var(--transition-fast);
+}
+
+.rule-box:hover {
+    border-color: #cbd5e1;
 }
 
 .rule-box h4 {
-    font-size: 0.9rem;
+    font-size: 0.92rem;
     font-weight: 700;
     color: var(--text-primary);
-    margin-bottom: 6px;
+    margin-bottom: 8px;
 }
 
-.rule-box p {
-    font-family: monospace;
+/* Beautiful Formula Badges */
+.formula-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    background: #ffffff;
+    border: 1px solid #bfdbfe;
+    border-radius: var(--radius-sm);
+    padding: 8px 12px;
+    font-family: var(--font-sans);
     font-size: 0.88rem;
-    color: var(--primary);
-    margin-bottom: 6px;
     font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 8px;
+    min-height: 48px;
+    box-shadow: 0 1px 2px rgba(37, 99, 235, 0.05);
+}
+
+.fraction-badge {
+    gap: 8px;
+}
+
+.math-fraction {
+    display: inline-flex;
+    flex-direction: column;
+    vertical-align: middle;
+    text-align: center;
+    line-height: 1.15;
+    padding: 2px 4px;
+}
+
+.math-fraction .numerator {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--primary);
+    border-bottom: 1.5px solid var(--primary);
+    padding-bottom: 2px;
+    white-space: nowrap;
+}
+
+.math-fraction .denominator {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--primary);
+    padding-top: 2px;
+    white-space: nowrap;
+}
+
+.math-symbol {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-right: 6px;
+    line-height: 1;
+    color: var(--primary);
+}
+
+.math-multiplier {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-left: 2px;
+}
+
+/* Status Chips for Rule 6 */
+.eligibility-badge {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+    min-height: auto;
+}
+
+.status-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.status-chip.chip-delivered {
+    background-color: var(--emerald-light);
+    color: #047857;
+    border: 1px solid #a7f3d0;
+}
+
+.status-chip.chip-pipeline {
+    background-color: var(--primary-light);
+    color: var(--primary);
+    border: 1px solid #bfdbfe;
+}
+
+.status-chip.chip-cancelled {
+    background-color: var(--rose-light);
+    color: #be123c;
+    border: 1px solid #fecdd3;
 }
 
 .rule-box small {
     font-size: 0.78rem;
     color: var(--text-secondary);
-    line-height: 1.35;
+    line-height: 1.4;
     display: block;
+    margin-top: auto;
 }
 
 /* ===================================================================
