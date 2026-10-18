@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CartCompass BI - E-Commerce Business Intelligence Dashboard</title>
+    <meta name="description" content="Management-oriented e-commerce business intelligence dashboard analyzing KPIs, revenue trends, product categories, and regional performance.">
+    <!-- Modern Typography: Inter & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Chart.js 4.4.2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                </div>
+                <div class="brand-text">
+                    <h2>CartCompass</h2>
+                    <span class="brand-tag">BI Executive</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#overview-section" class="nav-item active" id="nav-overview">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
+                    <span>Dashboard Overview</span>
+                </a>
+                <a href="#revenue-section" class="nav-item" id="nav-revenue">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                    <span>Revenue Trends</span>
+                </a>
+                <a href="#categories-section" class="nav-item" id="nav-categories">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                    <span>Category Breakdown</span>
+                </a>
+                <a href="#regions-section" class="nav-item" id="nav-regions">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    <span>Regional Insights</span>
+                </a>
+                <a href="#status-section" class="nav-item" id="nav-status">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    <span>Order Fulfillment</span>
+                </a>
+                <a href="#reports-section" class="nav-item" id="nav-reports">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span>Static Reports (Matplotlib)</span>
+                </a>
+                <a href="#methodology-section" class="nav-item" id="nav-methodology">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    <span>KPI Methodology</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="system-status">
+                    <span class="status-indicator online" id="system-status-indicator"></span>
+                    <span class="status-text" id="system-status-text">SQLite Connected</span>
+                </div>
+                <div class="db-meta" id="db-meta-info">750 Orders | 28 Products</div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content" id="main-content">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="mobile-toggle" id="mobile-sidebar-toggle" aria-label="Toggle navigation">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                    </button>
+                    <div class="header-title">
+                        <h1>CartCompass BI</h1>
+                        <p class="subtitle">E-Commerce Business Intelligence Dashboard</p>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <!-- Currency Switcher -->
+                    <div class="currency-toggle-wrapper">
+                        <label for="currency-toggle" class="currency-label">Currency:</label>
+                        <div class="currency-switch" id="currency-switch">
+                            <button type="button" class="curr-btn active" data-currency="INR" id="curr-inr">₹ INR</button>
+                            <button type="button" class="curr-btn" data-currency="USD" id="curr-usd">$ USD</button>
+                        </div>
+                    </div>
+
+                    <!-- Refresh Button -->
+                    <button class="btn btn-secondary btn-icon" id="btn-refresh" title="Reload Dashboard Data">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.19"></path></svg>
+                        <span>Refresh</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Global Notice & Policy Banner -->
+            <div class="banner-container">
+                <div class="info-banner" id="policy-banner">
+                    <div class="banner-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                    </div>
+                    <div class="banner-content">
+                        <strong>Reporting Policy:</strong> Realized revenue defaults strictly to <em>Delivered</em> orders. Cancelled orders are excluded from all revenue and order counts. Returns are attributed to corresponding order dates.
+                    </div>
+                    <div class="banner-badge">Synthetic Sample Dataset</div>
+                </div>
+            </div>
+
+            <!-- Filter Controls Bar -->
+            <section class="filter-bar card" aria-label="Dashboard Filters">
+                <div class="filter-group presets-group">
+                    <label class="filter-label">Quick Timeframe:</label>
+                    <div class="preset-buttons" id="timeframe-presets">
+                        <button type="button" class="preset-btn active" data-preset="all" id="preset-all">All Time</button>
+                        <button type="button" class="preset-btn" data-preset="12m" id="preset-12m">Last 12M</button>
+                        <button type="button" class="preset-btn" data-preset="6m" id="preset-6m">Last 6M</button>
+                        <button type="button" class="preset-btn" data-preset="q4" id="preset-q4">Q4 2025</button>
+                    </div>
+                </div>
+
+                <div class="filter-group date-inputs-group">
+                    <div class="input-wrapper">
+                        <label for="filter-start-date">From:</label>
+                        <input type="date" id="filter-start-date" name="start_date" class="form-input">
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="filter-end-date">To:</label>
+                        <input type="date" id="filter-end-date" name="end_date" class="form-input">
+                    </div>
+                </div>
+
+                <div class="filter-group status-mode-group">
+                    <label for="filter-status-mode">Sales Basis:</label>
+                    <select id="filter-status-mode" class="form-select">
+                        <option value="delivered" selected>Delivered (Realized Sales - Recommended)</option>
+                        <option value="all_active">All Active (Delivered + Shipped + Pending)</option>
+                        <option value="all">All Orders (Including Cancelled)</option>
+                    </select>
+                </div>
+
+                <div class="filter-actions">
+                    <button type="button" class="btn btn-primary" id="btn-apply-filters">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+                        <span>Apply</span>
+                    </button>
+                    <button type="button" class="btn btn-outline" id="btn-reset-filters">Reset</button>
+                </div>
+            </section>
+
+            <!-- Loading Spinner Indicator -->
+            <div class="loading-overlay" id="loading-overlay" style="display: none;">
+                <div class="spinner"></div>
+                <p>Computing Business Intelligence Metrics...</p>
+            </div>
+
+            <!-- Global Error Banner -->
+            <div class="error-banner" id="error-banner" style="display: none;">
+                <div class="error-icon">⚠️</div>
+                <div class="error-message" id="error-message-text">Error fetching data. Please ensure the Flask backend is running.</div>
+                <button type="button" class="close-btn" id="close-error-banner">&times;</button>
+            </div>
+
+            <!-- SECTION 1: KPI Summary Cards -->
+            <section class="section-container" id="overview-section">
+                <div class="section-header">
+                    <h2>Key Performance Indicators (KPIs)</h2>
+                    <span class="section-badge" id="active-policy-badge">Policy: Realized Sales</span>
+                </div>
+
+                <div class="kpi-grid">
+                    <!-- 1. Gross Sales -->
+                    <div class="kpi-card" id="card-gross-sales">
+                        <div class="kpi-top">
+                            <span class="kpi-title">Gross Sales</span>
+                            <div class="kpi-icon-bubble blue">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                            </div>
+                        </div>
+                        <div class="kpi-value" id="kpi-gross-sales">--</div>
+                        <div class="kpi-footer">
+                            <span class="kpi-subtext">Sum of (Qty × Price) before discounts</span>
+                        </div>
+                    </div>
+
+                    <!-- 2. Net Sales -->
+                    <div class="kpi-card highlight-card" id="card-net-sales">
+                        <div class="kpi-top">
+                            <span class="kpi-title">Net Sales (Realized)</span>
+                            <div class="kpi-icon-bubble emerald">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                            </div>
+                        </div>
+                        <div class="kpi-value" id="kpi-net-sales">--</div>
+                        <div class="kpi-footer">
+                            <span class="kpi-subtext">Gross − Discounts − Returns</span>
+                        </div>
+                    </div>
+
+                    <!-- 3. Total Orders -->
+                    <div class="kpi-card" id="card-total-orders">
+                        <div class="kpi-top">
+                            <span class="kpi-title">Total Orders</span>
+                            <div class="kpi-icon-bubble purple">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                            </div>
+                        </div>
+                        <div class="kpi-value" id="kpi-total-orders">--</div>
+                        <div class="kpi-footer">
+                            <span class="kpi-subtext" id="kpi-orders-subtext">Distinct eligible orders</span>
+                        </div>
+                    </div>
+
+                    <!-- 4. Average Order Value (AOV) -->
+                    <div class="kpi-card" id="card-aov">
+                        <div class="kpi-top">
+                            <span class="kpi-title">Average Order Value</span>
+                            <div class="kpi-icon-bubble indigo">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                            </div>
+                        </div>
+                        <div class="kpi-value" id="kpi-aov">--</div>
+                        <div class="kpi-footer">
+                            <span class="kpi-subtext">Net Sales ÷ Total Orders</span>
+                        </div>
+                    </div>
+
+                    <!-- 5. Discount Amount -->
+                    <div class="kpi-card" id="card-discount-amount">
+                        <div class="kpi-top">
+                            <span class="kpi-title">Total Discounts</span>
+                            <div class="kpi-icon-bubble amber">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="5" x2="5" y2="19"></line><circle cx="6.5" cy="6.5" r="2.5"></circle><circle cx="17.5" cy="17.5" r="2.5"></circle></svg>
+                            </div>
+                        </div>
+                        <div class="kpi-value" id="kpi-discount-amount">--</div>
+                        <div class="kpi-footer">
+                            <span class="kpi-subtext">Direct promotional reductions</span>
+                        </div>
+                    </div>
+
+                    <!-- 6. Return Amount -->
+                    <div class="kpi-card" id="card-return-amount">
+                        <div class="kpi-top">
+                            <span class="kpi-title">Returns Refunded</span>
+                            <div class="kpi-icon-bubble rose">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+                            </div>
+                        </div>
+                        <div class="kpi-value" id="kpi-return-amount">--</div>
+                        <div class="kpi-footer">
+                            <span class="kpi-subtext">Refunds on delivered orders</span>
+                        </div>
+                    </div>
+
+                    <!-- 7. Revenue Growth -->
+                    <div class="kpi-card" id="card-revenue-growth">
+                        <div class="kpi-top">
+                            <span class="kpi-title">Revenue Growth</span>
+                            <div class="kpi-icon-bubble cyan">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+                            </div>
+                        </div>
+                        <div class="kpi-value" id="kpi-revenue-growth">--</div>
+                        <div class="kpi-footer">
+                            <span class="trend-badge" id="growth-badge">vs. Preceding Period</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 2: Charts Row 1 - Revenue Trends & Period Comparison -->
+            <div class="charts-row">
+                <!-- Chart 1: Monthly Net Revenue Trend -->
+                <section class="chart-container card" id="revenue-section">
+                    <div class="chart-header">
+                        <div class="chart-title-group">
+                            <h3>Monthly Net Revenue Trend</h3>
+                            <p class="chart-subtitle">Realized monthly cash flows (delivering consistent business momentum)</p>
+                        </div>
+                        <div class="chart-badge">Line Chart</div>
+                    </div>
+                    <div class="canvas-wrapper">
+                        <canvas id="monthlyRevenueChart"></canvas>
+                    </div>
+                    <div class="chart-empty-state" id="monthly-empty-state" style="display: none;">
+                        No revenue records found for selected criteria.
+                    </div>
+                </section>
+
+                <!-- Chart 4: Current vs Previous Period Revenue -->
+                <section class="chart-container card" id="period-comparison-container">
+                    <div class="chart-header">
+                        <div class="chart-title-group">
+                            <h3>Period-over-Period Performance</h3>
+                            <p class="chart-subtitle">Comparison of Net Revenue and Order Volume against baseline</p>
+                        </div>
+                        <div class="chart-badge">Comparison</div>
+                    </div>
+                    <div class="canvas-wrapper">
+                        <canvas id="periodComparisonChart"></canvas>
+                    </div>
+                </section>
+            </div>
+
+            <!-- SECTION 3: Charts Row 2 - Category & Regional Performance -->
+            <div class="charts-row">
+                <!-- Chart 2: Revenue by Category -->
+                <section class="chart-container card" id="categories-section">
+                    <div class="chart-header">
+                        <div class="chart-title-group">
+                            <h3>Revenue by Product Category</h3>
+                            <p class="chart-subtitle">Category contribution to aggregate net sales</p>
+                        </div>
+                        <div class="chart-badge">Category Distribution</div>
+                    </div>
+                    <div class="canvas-wrapper">
+                        <canvas id="categoryRevenueChart"></canvas>
+                    </div>
+                </section>
+
+                <!-- Chart 3: Revenue by Region -->
+                <section class="chart-container card" id="regions-section">
+                    <div class="chart-header">
+                        <div class="chart-title-group">
+                            <h3>Regional Sales Performance</h3>
+                            <p class="chart-subtitle">Geographical distribution of revenue and order volume</p>
+                        </div>
+                        <div class="chart-badge">Geographic</div>
+                    </div>
+                    <div class="canvas-wrapper">
+                        <canvas id="regionalRevenueChart"></canvas>
+                    </div>
+                </section>
+            </div>
+
+            <!-- SECTION 4: Order Fulfillment & Detailed Aggregations -->
+            <div class="charts-row">
+                <!-- Chart 5: Order Status Distribution -->
+                <section class="chart-container card" id="status-section">
+                    <div class="chart-header">
+                        <div class="chart-title-group">
+                            <h3>Order Fulfillment Status Distribution</h3>
+                            <p class="chart-subtitle">Breakdown across Delivered, Shipped, Pending, and Cancelled</p>
+                        </div>
+                        <div class="chart-badge">Status Share</div>
+                    </div>
+                    <div class="canvas-wrapper doughnut-wrapper">
+                        <canvas id="orderStatusChart"></canvas>
+                    </div>
+                </section>
+
+                <!-- Summary Table: Regional & Category Breakdown -->
+                <section class="chart-container card" id="data-tables-card">
+                    <div class="chart-header">
+                        <div class="chart-title-group">
+                            <h3>Executive Segment Summary</h3>
+                            <p class="chart-subtitle">High-level sales and share breakdown across business units</p>
+                        </div>
+                        <div class="tab-buttons" id="summary-tabs">
+                            <button type="button" class="tab-btn active" data-tab="cat-tab" id="btn-cat-tab">Categories</button>
+                            <button type="button" class="tab-btn" data-tab="reg-tab" id="btn-reg-tab">Regions</button>
+                        </div>
+                    </div>
+
+                    <div class="table-wrapper">
+                        <table class="data-table" id="summary-table">
+                            <thead>
+                                <tr id="table-head-row">
+                                    <th>Segment</th>
+                                    <th>Net Sales</th>
+                                    <th>Discounts</th>
+                                    <th>Returns</th>
+                                    <th>Orders / Items</th>
+                                    <th>Share</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-body">
+                                <tr>
+                                    <td colspan="6" class="loading-cell">Loading segment data...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+
+            <!-- SECTION 5: Static Matplotlib Reports Gallery -->
+            <section class="section-container" id="reports-section">
+                <div class="section-header">
+                    <div class="header-with-badge">
+                        <h2>Publication-Grade Static Visualizations</h2>
+                        <span class="tech-pill">Matplotlib & Pandas Engine</span>
+                    </div>
+                    <button class="btn btn-secondary" id="btn-regenerate-static-charts">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                        <span>View Static Artifacts</span>
+                    </button>
+                </div>
+
+                <div class="static-charts-grid">
+                    <div class="static-chart-card">
+                        <div class="static-chart-info">
+                            <h4>Monthly Revenue Trend</h4>
+                            <span>analysis/outputs/monthly_revenue_trend.png</span>
+                        </div>
+                        <div class="img-preview-box">
+                            <img src="/api/chart-images/monthly_revenue_trend.png" alt="Monthly Revenue Trend Static Chart" loading="lazy">
+                        </div>
+                    </div>
+
+                    <div class="static-chart-card">
+                        <div class="static-chart-info">
+                            <h4>Category Revenue Distribution</h4>
+                            <span>analysis/outputs/category_revenue_distribution.png</span>
+                        </div>
+                        <div class="img-preview-box">
+                            <img src="/api/chart-images/category_revenue_distribution.png" alt="Category Revenue Distribution Static Chart" loading="lazy">
+                        </div>
+                    </div>
+
+                    <div class="static-chart-card">
+                        <div class="static-chart-info">
+                            <h4>Regional Performance & Orders</h4>
+                            <span>analysis/outputs/regional_performance.png</span>
+                        </div>
+                        <div class="img-preview-box">
+                            <img src="/api/chart-images/regional_performance.png" alt="Regional Performance Static Chart" loading="lazy">
+                        </div>
+                    </div>
+
+                    <div class="static-chart-card">
+                        <div class="static-chart-info">
+                            <h4>Order Status Breakdown</h4>
+                            <span>analysis/outputs/order_status_breakdown.png</span>
+                        </div>
+                        <div class="img-preview-box">
+                            <img src="/api/chart-images/order_status_breakdown.png" alt="Order Status Breakdown Static Chart" loading="lazy">
+                        </div>
+                    </div>
+
+                    <div class="static-chart-card">
+                        <div class="static-chart-info">
+                            <h4>Period Comparison (H1 vs H2)</h4>
+                            <span>analysis/outputs/period_comparison.png</span>
+                        </div>
+                        <div class="img-preview-box">
+                            <img src="/api/chart-images/period_comparison.png" alt="Period Comparison Static Chart" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 6: KPI Methodology & Business Rules Reference -->
+            <section class="section-container" id="methodology-section">
+                <div class="card methodology-card">
+                    <div class="methodology-header">
+                        <h3>Business Rules & KPI Mathematical Formulations</h3>
+                        <a href="https://github.com" target="_blank" class="doc-link">View docs/KPI_DEFINITIONS.md &rarr;</a>
+                    </div>
+                    <div class="rules-grid">
+                        <div class="rule-box">
+                            <h4>1. Gross Sales</h4>
+                            <p>$$\sum (\text{Quantity} \times \text{Unit Price})$$</p>
+                            <small>Calculated on eligible items prior to promotional discounts and return refunds.</small>
+                        </div>
+
+                        <div class="rule-box">
+                            <h4>2. Net Sales</h4>
+                            <p>$$\text{Gross Sales} - \text{Discounts} - \text{Returns}$$</p>
+                            <small>Reflects actual realized commercial inflow. Guaranteed non-negative per line item.</small>
+                        </div>
+
+                        <div class="rule-box">
+                            <h4>3. Total Orders</h4>
+                            <p>$$\text{Distinct Count}(\text{order\_id})$$</p>
+                            <small>Orders with multiple line items are counted exactly once to avoid volume inflation.</small>
+                        </div>
+
+                        <div class="rule-box">
+                            <h4>4. Average Order Value (AOV)</h4>
+                            <p>$$\frac{\text{Net Sales}}{\text{Total Orders}}$$</p>
+                            <small>Returns 0.0 safely if eligible order count is zero. Cancelled orders excluded.</small>
+                        </div>
+
+                        <div class="rule-box">
+                            <h4>5. Revenue Growth (%)</h4>
+                            <p>$$\frac{\text{Current Net Sales} - \text{Prior Net Sales}}{\text{Prior Net Sales}} \times 100$$</p>
+                            <small>Identical duration baseline. If prior net sales is zero or null, reports "N/A" rather than infinity.</small>
+                        </div>
+
+                        <div class="rule-box">
+                            <h4>6. Fulfillment Eligibility</h4>
+                            <p><strong>Delivered:</strong> Realized Cash Flows</p>
+                            <small><strong>Shipped & Pending:</strong> In-transit / fulfillment pipeline. <strong>Cancelled:</strong> Strictly omitted from revenue.</small>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="dashboard-footer">
+                <div class="footer-left">
+                    <p><strong>CartCompass-BI</strong> &bull; E-Commerce Management Business Intelligence System</p>
+                    <p class="footer-note">College Project &amp; GitHub Portfolio Demonstration &bull; Powered by Flask, SQLite, Pandas &amp; Chart.js</p>
+                </div>
+                <div class="footer-right">
+                    <span class="seed-label">Dataset Seed: 42 (Reproducible)</span>
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Application Script -->
+    <script src="js/script.js"></script>
+</body>
+</html>

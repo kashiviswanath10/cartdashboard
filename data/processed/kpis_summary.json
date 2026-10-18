@@ -1,0 +1,298 @@
+{
+  "generated_at": "2026-10-18T20:21:58.392497",
+  "policy": {
+    "default_mode": "delivered",
+    "description": "Delivered orders represent finalized realized sales. Cancelled orders are excluded."
+  },
+  "realized_kpis": {
+    "gross_sales": 5324865.0,
+    "discount_amount": 207400.1,
+    "return_amount": 174972.37,
+    "net_sales": 4942492.53,
+    "total_orders": 551,
+    "total_items_sold": 1483,
+    "average_order_value": 8970.04
+  },
+  "all_active_kpis": {
+    "gross_sales": 6460993.0,
+    "discount_amount": 241283.88,
+    "return_amount": 174972.37,
+    "net_sales": 6044736.75,
+    "total_orders": 689,
+    "total_items_sold": 1820,
+    "average_order_value": 8773.2
+  },
+  "status_distribution": [
+    {
+      "status": "delivered",
+      "order_count": 551,
+      "percentage": 73.47
+    },
+    {
+      "status": "shipped",
+      "order_count": 80,
+      "percentage": 10.67
+    },
+    {
+      "status": "cancelled",
+      "order_count": 61,
+      "percentage": 8.13
+    },
+    {
+      "status": "pending",
+      "order_count": 58,
+      "percentage": 7.73
+    }
+  ],
+  "monthly_revenue": [
+    {
+      "year_month": "2025-01",
+      "gross_sales": 437532.0,
+      "discount_amount": 19142.44,
+      "return_amount": 7749.9,
+      "total_orders": 41,
+      "total_items": 122,
+      "net_sales": 410639.66,
+      "aov": 10015.6
+    },
+    {
+      "year_month": "2025-02",
+      "gross_sales": 298955.0,
+      "discount_amount": 6907.32,
+      "return_amount": 6748.5,
+      "total_orders": 36,
+      "total_items": 96,
+      "net_sales": 285299.18,
+      "aov": 7924.98
+    },
+    {
+      "year_month": "2025-03",
+      "gross_sales": 288036.0,
+      "discount_amount": 15540.02,
+      "return_amount": 19948.95,
+      "total_orders": 46,
+      "total_items": 115,
+      "net_sales": 252547.03,
+      "aov": 5490.15
+    },
+    {
+      "year_month": "2025-04",
+      "gross_sales": 469523.0,
+      "discount_amount": 8319.83,
+      "return_amount": 2387.61,
+      "total_orders": 28,
+      "total_items": 82,
+      "net_sales": 458815.56,
+      "aov": 16386.27
+    },
+    {
+      "year_month": "2025-05",
+      "gross_sales": 292866.0,
+      "discount_amount": 13425.89,
+      "return_amount": 20203.99,
+      "total_orders": 38,
+      "total_items": 87,
+      "net_sales": 259236.12,
+      "aov": 6822.0
+    },
+    {
+      "year_month": "2025-06",
+      "gross_sales": 282026.0,
+      "discount_amount": 15546.5,
+      "return_amount": 1924.3,
+      "total_orders": 29,
+      "total_items": 77,
+      "net_sales": 264555.2,
+      "aov": 9122.59
+    },
+    {
+      "year_month": "2025-07",
+      "gross_sales": 450297.0,
+      "discount_amount": 25434.81,
+      "return_amount": 8064.93,
+      "total_orders": 40,
+      "total_items": 107,
+      "net_sales": 416797.26,
+      "aov": 10419.93
+    },
+    {
+      "year_month": "2025-08",
+      "gross_sales": 416676.0,
+      "discount_amount": 13131.85,
+      "return_amount": 4329.61,
+      "total_orders": 31,
+      "total_items": 76,
+      "net_sales": 399214.54,
+      "aov": 12877.89
+    },
+    {
+      "year_month": "2025-09",
+      "gross_sales": 547020.0,
+      "discount_amount": 24434.55,
+      "return_amount": 9932.15,
+      "total_orders": 45,
+      "total_items": 134,
+      "net_sales": 512653.3,
+      "aov": 11392.3
+    },
+    {
+      "year_month": "2025-10",
+      "gross_sales": 424178.0,
+      "discount_amount": 15968.49,
+      "return_amount": 33560.82,
+      "total_orders": 44,
+      "total_items": 131,
+      "net_sales": 374648.69,
+      "aov": 8514.74
+    },
+    {
+      "year_month": "2025-11",
+      "gross_sales": 378521.0,
+      "discount_amount": 17425.1,
+      "return_amount": 3858.6,
+      "total_orders": 49,
+      "total_items": 130,
+      "net_sales": 357237.3,
+      "aov": 7290.56
+    },
+    {
+      "year_month": "2025-12",
+      "gross_sales": 512757.0,
+      "discount_amount": 11655.41,
+      "return_amount": 8641.65,
+      "total_orders": 54,
+      "total_items": 148,
+      "net_sales": 492459.94,
+      "aov": 9119.63
+    },
+    {
+      "year_month": "2026-01",
+      "gross_sales": 260061.0,
+      "discount_amount": 14999.96,
+      "return_amount": 44041.63,
+      "total_orders": 36,
+      "total_items": 92,
+      "net_sales": 201019.41,
+      "aov": 5583.87
+    },
+    {
+      "year_month": "2026-02",
+      "gross_sales": 266417.0,
+      "discount_amount": 5467.93,
+      "return_amount": 3579.73,
+      "total_orders": 34,
+      "total_items": 86,
+      "net_sales": 257369.34,
+      "aov": 7569.69
+    }
+  ],
+  "category_revenue": [
+    {
+      "category": "Electronics",
+      "gross_sales": 2198807.0,
+      "discount_amount": 86468.33,
+      "return_amount": 31484.15,
+      "total_items": 293,
+      "distinct_orders": 169,
+      "net_sales": 2080854.52,
+      "revenue_share_pct": 42.1
+    },
+    {
+      "category": "Home & Kitchen",
+      "gross_sales": 1759441.0,
+      "discount_amount": 75218.62,
+      "return_amount": 100882.77,
+      "total_items": 307,
+      "distinct_orders": 175,
+      "net_sales": 1583339.61,
+      "revenue_share_pct": 32.04
+    },
+    {
+      "category": "Fashion & Apparel",
+      "gross_sales": 620658.0,
+      "discount_amount": 19576.48,
+      "return_amount": 11759.49,
+      "total_items": 342,
+      "distinct_orders": 196,
+      "net_sales": 589322.03,
+      "revenue_share_pct": 11.92
+    },
+    {
+      "category": "Sports & Fitness",
+      "gross_sales": 455453.0,
+      "discount_amount": 14220.17,
+      "return_amount": 17226.44,
+      "total_items": 247,
+      "distinct_orders": 151,
+      "net_sales": 424006.39,
+      "revenue_share_pct": 8.58
+    },
+    {
+      "category": "Beauty & Personal Care",
+      "gross_sales": 290506.0,
+      "discount_amount": 11916.5,
+      "return_amount": 13619.52,
+      "total_items": 294,
+      "distinct_orders": 164,
+      "net_sales": 264969.98,
+      "revenue_share_pct": 5.36
+    }
+  ],
+  "regional_revenue": [
+    {
+      "region": "North",
+      "gross_sales": 1160992.0,
+      "discount_amount": 38865.4,
+      "return_amount": 26756.72,
+      "total_orders": 120,
+      "total_items": 319,
+      "net_sales": 1095369.88,
+      "aov": 9128.08,
+      "revenue_share_pct": 22.16
+    },
+    {
+      "region": "Central",
+      "gross_sales": 1140219.0,
+      "discount_amount": 51179.98,
+      "return_amount": 12648.98,
+      "total_orders": 112,
+      "total_items": 290,
+      "net_sales": 1076390.04,
+      "aov": 9610.63,
+      "revenue_share_pct": 21.78
+    },
+    {
+      "region": "West",
+      "gross_sales": 1043084.0,
+      "discount_amount": 40941.69,
+      "return_amount": 24500.49,
+      "total_orders": 109,
+      "total_items": 322,
+      "net_sales": 977641.82,
+      "aov": 8969.19,
+      "revenue_share_pct": 19.78
+    },
+    {
+      "region": "South",
+      "gross_sales": 1092983.0,
+      "discount_amount": 38197.22,
+      "return_amount": 98312.69,
+      "total_orders": 103,
+      "total_items": 282,
+      "net_sales": 956473.09,
+      "aov": 9286.15,
+      "revenue_share_pct": 19.35
+    },
+    {
+      "region": "East",
+      "gross_sales": 887587.0,
+      "discount_amount": 38215.81,
+      "return_amount": 12753.49,
+      "total_orders": 107,
+      "total_items": 270,
+      "net_sales": 836617.7,
+      "aov": 7818.86,
+      "revenue_share_pct": 16.93
+    }
+  ]
+}
