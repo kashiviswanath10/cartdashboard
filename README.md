@@ -8,159 +8,180 @@
 [![Tests](https://img.shields.io/badge/Tests-18%20Passed-10b981?logo=pytest&logoColor=white)](https://docs.pytest.org/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-An executive, management-oriented E-Commerce Business Intelligence (BI) dashboard designed for college academic reviews and professional GitHub portfolios.
+An executive, multi-page **E-Commerce Business Intelligence (BI) Dashboard** engineered for management performance reviews, academic project evaluations, and GitHub portfolio showcases.
 
-CartCompass-BI analyzes overall business performance using key performance indicators (KPIs), monthly revenue trajectories, product category breakdowns, regional sales distributions, and period-over-period growth metrics.
+CartCompass-BI analyzes high-level store performance through real-time Key Performance Indicators (KPIs), multi-year monthly revenue cash flows, product category contributions, geographical delivery territory analytics, period-over-period baseline growth rates, and automated narrative executive insights.
 
-> **Notice:** All records in this project are generated using a reproducible synthetic e-commerce data pipeline (`seed=42`). The project does not claim to represent any actual commercial entity.
+> **Notice:** All transaction records in this repository are generated through a deterministic, reproducible synthetic e-commerce data pipeline (`seed=42`). The data does not represent any real-world commercial entity.
 
 ---
 
 ## Table of Contents
-1. [Key Features](#1-key-features)
-2. [Technology Stack](#2-technology-stack)
-3. [Architecture Overview](#3-architecture-overview)
-4. [Folder Structure](#4-folder-structure)
-5. [Database Design](#5-database-design)
-6. [Business Intelligence KPIs](#6-business-intelligence-kpis)
-7. [Installation & Setup (Windows PowerShell)](#7-installation--setup-windows-powershell)
-8. [Running the Application](#8-running-the-application)
-9. [Running Automated Tests](#9-running-automated-tests)
-10. [Generating Static Reports (Matplotlib)](#10-generating-static-reports-matplotlib)
-11. [Troubleshooting](#11-troubleshooting)
-12. [Publishing to GitHub](#12-publishing-to-github)
-13. [Future Roadmap](#13-future-roadmap)
+1. [Executive Dashboard Pages](#1-executive-dashboard-pages)
+2. [Design System & Aesthetics](#2-design-system--aesthetics)
+3. [Technology Stack](#3-technology-stack)
+4. [Architecture Overview](#4-architecture-overview)
+5. [Folder Structure](#5-folder-structure)
+6. [Database Design & Performance Indexes](#6-database-design--performance-indexes)
+7. [Business Intelligence KPIs & Mathematical Formulations](#7-business-intelligence-kpis--mathematical-formulations)
+8. [Installation & Setup (Windows PowerShell)](#8-installation--setup-windows-powershell)
+9. [Running the Application](#9-running-the-application)
+10. [Automated Test Suite (pytest)](#10-automated-test-suite-pytest)
+11. [Publication-Grade Charts Engine (Matplotlib)](#11-publication-grade-charts-engine-matplotlib)
+12. [Troubleshooting Guide](#12-troubleshooting-guide)
+13. [Academic Review & Portfolio Checklist](#13-academic-review--portfolio-checklist)
+14. [License](#14-license)
 
 ---
 
-## 1. Key Features
+## 1. Executive Dashboard Pages
 
-- **Executive KPI Cards**: Real-time cards for Gross Sales, Realized Net Sales, Total Orders, Average Order Value (AOV), Total Discounts, Returns Refunded, and Period Growth.
-- **Dynamic Chart.js Visualizations**:
-  1. *Monthly Net Revenue Trend*: Smooth line chart with gradient fill and dual-series gross vs. net tracking.
-  2. *Period-over-Period Performance*: Side-by-side grouped comparison against previous baseline periods.
-  3. *Revenue by Category*: Horizontal bar chart highlighting category contribution.
-  4. *Regional Sales Performance*: Geographical distribution of sales volume and AOV.
-  5. *Order Fulfillment Status*: Doughnut breakdown of Delivered, Shipped, Pending, and Cancelled orders.
-- **Configurable Currency Switcher**: Instant toggle between Indian Rupee (**₹ INR**, default) and US Dollar (**$ USD**) with live number formatting.
-- **Flexible Timeframe Filtering**: Quick presets (*All Time*, *Last 12M*, *Last 6M*, *Q4 2025*) plus custom `start_date` and `end_date` date pickers.
-- **Policy Control**: Toggle between *Realized Sales* (Delivered only) and *Active Orders* (Delivered + Shipped + Pending).
-- **Publication-Grade Static Charts**: Generates high-resolution Matplotlib PNG charts in `analysis/outputs/`.
-- **Zero-Dependency Lightweight Backend**: Built using Python's built-in `sqlite3` engine—no external database servers (MySQL or Postgres) required.
+CartCompass-BI is structured as a cohesive, 5-page enterprise analytics application:
 
----
-
-## 2. Technology Stack
-
-| Layer | Technologies Used | Description |
+| Page | URL Route | Description & Visualizations |
 | :--- | :--- | :--- |
-| **Frontend** | HTML5, Modern CSS3, JavaScript (ES6+) | Vanilla CSS design system, responsive layout, Google Fonts (Inter & Outfit). |
-| **Interactive Charts** | Chart.js 4.4 | Browser-side interactive, responsive visualizations. |
-| **Backend API** | Python, Flask 3.1 | RESTful API blueprints, parameterized SQL execution, secure error handling. |
-| **Database** | SQLite 3 (`sqlite3`) | Relational database with enforced foreign keys and performance indexes. |
-| **Data Analysis** | Pandas, NumPy | Data cleaning pipeline, KPI aggregation, and validation. |
-| **Static Reporting** | Matplotlib 3.11 | Headless generation of publication-quality static chart artifacts. |
-| **Testing** | pytest 9.1 | 18 unit and integration tests with isolated test databases. |
+| **1. Overview** | `/` or `/index.html` | **Executive Cockpit**: Real-time KPI summary (Gross Sales, Net Sales, Orders, AOV, YoY Growth), glowing 14-month revenue trajectory line chart, category revenue distribution doughnut, regional performance horizontal bar chart, and category audit table. |
+| **2. Revenue Analytics** | `/revenue` or `/revenue.html` | **Cash Flow & Margin Analysis**: Net cash realization rate %, spread between booked invoices and realized proceeds, dual-series gross vs. net trajectory, grouped current vs. previous period comparison bar chart, and 14-month financial ledger table. |
+| **3. Categories** | `/categories` or `/categories.html` | **Merchandise Portfolio**: Top-performing vertical highlights (by net revenue and unit volume), horizontal bar comparisons with value callouts, portfolio percentage share doughnut, and complete vertical performance audit table with YoY growth. |
+| **4. Regions** | `/regions` or `/regions.html` | **Geographical Logistics**: Leading territorial hub metrics, revenue volume horizontal bar chart, dual-axis territory comparison (AOV vs. Order Volume), and regional delivery efficiency table with target pacing. |
+| **5. Reports & Audit** | `/reports` or `/reports.html` | **Formal Management Audit**: 7 executive KPI cards, data-driven narrative takeaway boxes, fulfillment status distribution doughnut, publication-grade Matplotlib static chart gallery (16:9 uniform widescreen ratio), formal KPI mathematical equations, and one-click Print / Export to PDF. |
 
 ---
 
-## 3. Architecture Overview
+## 2. Design System & Aesthetics
 
-CartCompass-BI follows a clean, modular tiered architecture:
+The frontend features a bespoke executive dark theme styled after high-end market intelligence terminals:
+
+- **Curated Color Palette**:
+  - Background Base: `#0A0E1A` (Deep Obsidian Navy)
+  - Card Containers: `#12192B` (Executive Slate Blue)
+  - Card Borders & Dividers: `#1D2844` / `#2B3B64`
+  - Active Pills & Brand Highlight: `#FF6B00` (Vibrant Tangerine Orange)
+  - Realized Value & Trend Accents: `#00D2D3` (Cyan) and `#10B981` (Emerald Green)
+  - Warnings & Deductions: `#F43F5E` (Rose Red) and `#F59E0B` (Amber)
+- **Modern Typography**: Embedded Google Fonts pairing **Outfit** (headings, bold metrics) with **Inter** (tables, labels, narrative text).
+- **Dual-Currency Engine**: Instant toggle between Indian Rupee (**₹ INR**, default) and US Dollar (**$ USD**) with live recalculation and regional formatting (`₹ Lakhs/Cr` vs `$k/$M`).
+- **Offline / Standalone Fallback**: Integrated client-side dataset fallback (`DEMO_DATA`). If the Flask backend is unreachable or the application is opened statically (e.g. GitHub Pages or file server), the entire interface functions seamlessly with full sample metrics and charts.
+- **Print & PDF Mode**: Tailored `@media print` stylesheets strip dark backgrounds and sidebars, automatically generating a formal black-and-white management document suitable for submission.
+
+---
+
+## 3. Technology Stack
+
+| Component | Technology | Rationale & Specifications |
+| :--- | :--- | :--- |
+| **Frontend Structure** | HTML5 (Semantic) | Accessible, lightweight semantic structure with mobile drawer navigation. |
+| **Styling & Theme** | Modern Vanilla CSS3 | Custom design system using CSS variables, flexbox, CSS grid, and media queries. |
+| **Interactive Visualizations** | Chart.js 4.4 | GPU-accelerated responsive canvas charts with custom tooltips and dark theme defaults. |
+| **Backend API** | Python 3.10+, Flask 3.1 | Modular application factory pattern using Flask Blueprints with parameterized queries. |
+| **Relational Database** | SQLite 3 (`sqlite3`) | Embedded SQL database with foreign key enforcement and multi-column indexes. |
+| **Data Analysis** | Pandas 2.0+, NumPy | Data cleaning pipeline, aggregate KPI formulations, and cohort transformations. |
+| **Static Reporting** | Matplotlib 3.11 | Headless static chart generation exporting uniform 16:9 publication PNGs. |
+| **Test Suite** | pytest 9.1 | 18 automated unit and integration tests with isolated SQLite fixtures. |
+
+---
+
+## 4. Architecture Overview
+
+CartCompass-BI implements a decoupled, 3-tier architecture:
 
 ```
-┌────────────────────────────────────────────────────────┐
-│           Presentation Layer (HTML5/CSS3/JS)           │
-│  - KPI Cards       - Interactive Chart.js   - Filters  │
-└───────────────────────────▲────────────────────────────┘
-                            │ JSON REST API
-┌───────────────────────────▼────────────────────────────┐
-│            Flask API Layer (backend/app.py)            │
-│  - /api/health     - /api/kpis      - /api/revenue/*   │
-│  - /api/categories - /api/regions   - /api/status-*    │
-└───────────────────────────▲────────────────────────────┘
-                            │ Parameterized SQL
-┌───────────────────────────▼────────────────────────────┐
-│      Data Access & Analytics (backend/services)        │
-│  - analytics.py: KPI formulas & Period-over-Period     │
-│  - db.py: SQLite connection pool & PRAGMA foreign keys │
-└───────────────────────────▲────────────────────────────┘
-                            │
-┌───────────────────────────▼────────────────────────────┐
-│              SQLite Storage (cartcompass.db)           │
-│  - products (28)   - orders (750)   - order_items(1300)│
-└────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────────────────┐
+│             Presentation Tier (HTML5, Modern CSS3, JavaScript)         │
+│  - 5 Multi-Page Views   - Dark Theme System   - Chart.js Visualizations│
+│  - ₹ / $ Currency Engine - Live Status Pill    - Print-to-PDF Styles    │
+└───────────────────────────────────▲────────────────────────────────────┘
+                                    │ JSON REST API / Static Assets
+┌───────────────────────────────────▼────────────────────────────────────┐
+│                    Flask API Tier (backend/app.py)                     │
+│  - /api/health          - /api/kpis           - /api/revenue/monthly   │
+│  - /api/categories      - /api/regions        - /api/status-distribution│
+│  - /api/chart-images/*  - Clean URL Routing   - Parameter Validation   │
+└───────────────────────────────────▲────────────────────────────────────┘
+                                    │ Parameterized SQL Queries
+┌───────────────────────────────────▼────────────────────────────────────┐
+│              Data Access & Analytics (backend/services)                │
+│  - analytics.py: GAAP realized formulas, baseline growth, aggregations │
+│  - db.py: SQLite connection manager with PRAGMA foreign_keys = ON      │
+└───────────────────────────────────▲────────────────────────────────────┘
+                                    │
+┌───────────────────────────────────▼────────────────────────────────────┐
+│                  Relational Storage (cartcompass.db)                   │
+│  - products (28)        - orders (750)        - order_items (1,300)    │
+└────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 4. Folder Structure
+## 5. Folder Structure
 
 ```
 CartCompass-BI/
-├── frontend/
-│   ├── index.html                  # Page 1: Overview Dashboard
-│   ├── revenue.html                # Page 2: Revenue Analytics
-│   ├── categories.html             # Page 3: Categories Performance
-│   ├── regions.html                # Page 4: Regional Performance
-│   ├── reports.html                # Page 5: Executive Reports & Audit
+├── frontend/                       # Client-side presentation layer
+│   ├── index.html                  # Page 1: Overview Dashboard Cockpit
+│   ├── revenue.html                # Page 2: Revenue & Cash Flow Analytics
+│   ├── categories.html             # Page 3: Category Performance & Share
+│   ├── regions.html                # Page 4: Regional Logistics & Hubs
+│   ├── reports.html                # Page 5: Executive Audit & Reports
+│   ├── assets/                     # Static client-side assets
+│   │   └── charts/                 # Synchronized 16:9 publication charts
 │   ├── css/
-│   │   └── style.css               # Shared executive dark design system (reference UI)
-│   ├── js/
-│   │   ├── common.js               # Universal API client, demo fallback, currency toggle
-│   │   ├── overview.js             # Overview page logic
-│   │   ├── revenue.js              # Revenue analytics logic
-│   │   ├── categories.js           # Category breakdown logic
-│   │   ├── regions.js              # Regional performance logic
-│   │   └── reports.js              # Executive report & automated insights
-│   └── assets/                     # Static web assets
-├── backend/
-│   ├── app.py                      # Flask app factory, API routes & multi-page server
-│   ├── config.py                   # App configuration & environment defaults
-│   ├── db.py                       # SQLite connection manager with FK enforcement
-│   ├── routes/
+│   │   └── style.css               # Executive dark design system & print styles
+│   └── js/
+│       ├── common.js               # Shared state, currency switcher, demo fallback
+│       ├── overview.js             # Overview page interactive controllers
+│       ├── revenue.js              # Revenue analytics controllers
+│       ├── categories.js           # Category breakdown controllers
+│       ├── regions.js              # Regional performance controllers
+│       └── reports.js              # Executive audit, insights & print handlers
+├── backend/                        # Server application layer
+│   ├── app.py                      # Application factory & clean URL router
+│   ├── config.py                   # Configuration defaults & environment settings
+│   ├── db.py                       # SQLite connection pool with FK enforcement
+│   ├── routes/                     # Modular REST API endpoints (Blueprints)
 │   │   ├── kpis.py                 # GET /api/kpis
 │   │   ├── revenue.py              # GET /api/revenue/monthly & /api/revenue/growth
 │   │   ├── categories.py           # GET /api/categories
 │   │   └── regions.py              # GET /api/regions
 │   └── services/
-│       └── analytics.py            # Business logic, SQL queries, period growth
-├── database/
-│   ├── schema.sql                  # DDL schema with constraints & indexes
+│       └── analytics.py            # KPI business logic & SQL query formulations
+├── database/                       # Relational schema and seed scripts
+│   ├── schema.sql                  # DDL table schemas, constraints & indexes
 │   └── init_db.py                  # Synthetic data generator & DB initializer
-├── analysis/
-│   ├── clean_data.py               # Data validation, cleaning, and export
+├── analysis/                       # Offline data science & report generation
+│   ├── clean_data.py               # Data validation, cleaning, and master export
 │   ├── calculate_kpis.py           # Pandas KPI calculations & summaries
-│   ├── generate_charts.py          # Static Matplotlib chart generation
-│   └── outputs/                    # Exported high-res PNG static charts
-├── data/
+│   ├── generate_charts.py          # Matplotlib 16:9 static chart generator
+│   └── outputs/                    # Exported high-res PNG static charts (300 DPI)
+├── data/                           # Data storage
 │   ├── raw/                        # Generated raw CSV datasets
-│   └── processed/                  # Cleaned master tables & summaries
-├── tests/
-│   ├── test_kpis.py                # Unit tests for KPI formulas & edge cases
-│   └── test_api.py                 # Integration tests for Flask endpoints & SQLite
-├── docs/
-│   └── KPI_DEFINITIONS.md          # Comprehensive KPI formulas & methodology
-├── .gitignore                      # Git ignore rules (DBs, pycache, envs)
+│   └── processed/                  # Cleaned master tables & JSON/CSV summaries
+├── tests/                          # Automated verification suite
+│   ├── test_kpis.py                # Unit tests for KPI calculations & edge cases
+│   └── test_api.py                 # Integration tests for Flask endpoints & DB
+├── docs/                           # Project documentation
+│   └── KPI_DEFINITIONS.md          # Comprehensive mathematical formulas & methodology
 ├── .env.example                    # Sample environment configurations
+├── .gitignore                      # Git ignore specifications
+├── LICENSE                         # MIT License
 ├── requirements.txt                # Python package dependencies
-└── README.md                       # Complete documentation & run guide
+└── README.md                       # Complete project documentation
 ```
 
 ---
 
-## 5. Database Design
+## 6. Database Design & Performance Indexes
 
-SQLite database: `cartcompass.db`. Foreign keys are enabled on every connection via `PRAGMA foreign_keys = ON;`.
+The SQLite database (`cartcompass.db`) adheres to relational 3NF design principles. Foreign keys are enforced on every database connection via `PRAGMA foreign_keys = ON;`.
 
-### Schema Summary
+### Table Schemas
 
 #### 1. `products`
 | Column | Type | Constraints | Description |
 | :--- | :--- | :--- | :--- |
 | `product_id` | INTEGER | PRIMARY KEY | Unique product identifier |
 | `product_name` | TEXT | NOT NULL | Item commercial title |
-| `category` | TEXT | NOT NULL | Catalog category (e.g., Electronics) |
+| `category` | TEXT | NOT NULL | Catalog vertical (e.g. *Electronics*, *Fashion & Apparel*) |
 
 #### 2. `orders`
 | Column | Type | Constraints | Description |
@@ -168,20 +189,21 @@ SQLite database: `cartcompass.db`. Foreign keys are enabled on every connection 
 | `order_id` | INTEGER | PRIMARY KEY | Unique order number |
 | `order_date` | TEXT | NOT NULL | ISO format date (`YYYY-MM-DD`) |
 | `order_status` | TEXT | NOT NULL | `delivered`, `shipped`, `pending`, `cancelled` |
-| `region` | TEXT | NOT NULL | Geographic region (`North`, `South`, `East`, `West`, `Central`) |
+| `region` | TEXT | NOT NULL | Geographic hub (`North`, `South`, `East`, `West`, `Central`) |
 
 #### 3. `order_items`
 | Column | Type | Constraints | Description |
 | :--- | :--- | :--- | :--- |
-| `item_id` | INTEGER | PRIMARY KEY | Unique order line identifier |
+| `item_id` | INTEGER | PRIMARY KEY | Unique order item line identifier |
 | `order_id` | INTEGER | NOT NULL, FK -> `orders(order_id)` | Linked order |
 | `product_id` | INTEGER | NOT NULL, FK -> `products(product_id)` | Linked product |
 | `quantity` | INTEGER | NOT NULL, CHECK(`quantity > 0`) | Number of units purchased |
-| `unit_price` | REAL | NOT NULL, CHECK(`unit_price >= 0`) | Selling price per unit |
-| `discount` | REAL | NOT NULL, DEFAULT 0, CHECK(`discount >= 0`) | Promotional discount amount |
+| `unit_price` | REAL | NOT NULL, CHECK(`unit_price >= 0`) | Unit selling price |
+| `discount` | REAL | NOT NULL, DEFAULT 0, CHECK(`discount >= 0`) | Promotional discount applied |
 | `return_amount`| REAL | NOT NULL, DEFAULT 0, CHECK(`return_amount >= 0`) | Refund amount on returns |
 
-#### Performance Indexes
+### Performance Indexes
+To ensure fast execution on analytical aggregations, the following indexes are active:
 - `idx_orders_order_date` on `orders(order_date)`
 - `idx_orders_order_status` on `orders(order_status)`
 - `idx_orders_region` on `orders(region)`
@@ -191,62 +213,66 @@ SQLite database: `cartcompass.db`. Foreign keys are enabled on every connection 
 
 ---
 
-## 6. Business Intelligence KPIs
+## 7. Business Intelligence KPIs & Mathematical Formulations
 
-| Metric | Formula | Business Policy |
+CartCompass-BI implements strict accounting and business rules:
+
+| Metric | Mathematical Formulation | Enforced Business Logic |
 | :--- | :--- | :--- |
-| **Gross Sales** | $\sum (\text{Quantity} \times \text{Unit Price})$ | Pre-discount sales value of eligible orders. |
-| **Discount Amount** | $\sum \text{Discount}$ | Total promotional reductions (currency amounts). |
-| **Return Amount** | $\sum \text{Return Amount}$ | Total customer refunds on delivered orders. |
-| **Net Sales** | $\text{Gross} - \text{Discount} - \text{Return}$ | Realized revenue from finalized orders. |
-| **Total Orders** | $\text{COUNT}(\text{DISTINCT } \text{order\_id})$ | Distinct orders count (multi-item orders counted once). |
-| **Average Order Value (AOV)** | $\frac{\text{Net Sales}}{\text{Total Orders}}$ | Safe zero handling ($0.00$ if orders $= 0$). |
-| **Revenue Growth (%)** | $\frac{\text{Current Net} - \text{Prior Net}}{\text{Prior Net}} \times 100$ | Returns `N/A` if previous period net sales $\le 0$. |
+| **Gross Booked Sales** | $$\sum (\text{Quantity} \times \text{Unit Price})$$ | Invoiced transaction value prior to promotional deductions or returns. |
+| **Promotional Discounts** | $$\sum \text{Discount}$$ | Aggregate promotional value subtracted from customer invoices. |
+| **Refunded Returns** | $$\sum \text{Return Amount}$$ | Total return refunds granted to customers on delivered orders. |
+| **Realized Net Sales** | $$\text{Gross} - \text{Discounts} - \text{Returns}$$ | Realized cash inflows. Cancelled orders are strictly excluded. |
+| **Distinct Order Count** | $$\text{COUNT}(\text{DISTINCT } \text{order\_id})$$ | Unique orders counted once regardless of the number of line items. |
+| **Average Order Value (AOV)** | $$\frac{\text{Net Sales}}{\text{Total Orders}}$$ | Handled with zero-division safety ($0.00$ if eligible order count is $0$). |
+| **Period Growth Rate (%)** | $$\frac{\text{Current Net} - \text{Prior Net}}{\text{Prior Net}} \times 100$$ | Evaluated against an identical-duration previous period. Returns `N/A` if baseline $\le 0$. |
 
-For comprehensive formula derivations, cohort rules, and limitations, refer to [docs/KPI_DEFINITIONS.md](docs/KPI_DEFINITIONS.md).
+*For complete mathematical derivations and edge-case proofs, see [docs/KPI_DEFINITIONS.md](docs/KPI_DEFINITIONS.md).*
 
 ---
 
-## 7. Installation & Setup (Windows PowerShell)
+## 8. Installation & Setup (Windows PowerShell)
 
 ### Prerequisites
 - Windows 10 or 11
-- Python 3.10 or higher installed (verify via `py --version` or `python --version`)
-- Git installed (verify via `git --version`)
+- Python 3.10 or higher installed (check with `py --version`)
+- Git installed (check with `git --version`)
 
-### Step 1: Open PowerShell and Navigate to the Project
+### Step 1: Open PowerShell and Navigate to the Repository
 ```powershell
 cd u:\CartCompass-BI
 ```
 
-### Step 2: (Optional) Create and Activate a Virtual Environment
+### Step 2: (Recommended) Create and Activate Virtual Environment
 ```powershell
-# Create virtual environment named .venv
+# Create virtual environment
 py -m venv .venv
 
-# Activate in PowerShell
+# Activate virtual environment
 .\.venv\Scripts\Activate.ps1
 ```
 
-> **Note on PowerShell Execution Policy:** If you encounter a script execution error, run:
-> `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned`
+> **PowerShell Script Policy Tip:** If script execution is blocked on your system, enable it for your current user:
+> ```powershell
+> Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+> ```
 
-### Step 3: Install Required Dependencies
+### Step 3: Install Required Python Packages
 ```powershell
 py -m pip install -r requirements.txt
 ```
 
 ---
 
-## 8. Running the Application
+## 9. Running the Application
 
-### Step 1: Initialize Database and Generate Synthetic Data
+### Step 1: Initialize the SQLite Database
 ```powershell
 py database/init_db.py --force
 ```
-*Output: Generates 750 orders, 28 products, and 1,300 order items across 14 months, creating `cartcompass.db`.*
+*Creates `cartcompass.db` populated with 750 orders, 28 products, and 1,300 order items across 14 months.*
 
-### Step 2: Launch the Flask Backend & Dashboard
+### Step 2: Start the Flask Backend Server
 ```powershell
 py backend/app.py
 ```
@@ -258,23 +284,25 @@ Starting CartCompass-BI on http://127.0.0.1:5000
  * Running on http://127.0.0.1:5000
 ```
 
-### Step 3: Open the Dashboard in Your Browser
-Visit your local URL:
-```
-http://127.0.0.1:5000
-```
+### Step 3: Access the Multi-Page Dashboard in Your Browser
+Open your browser and navigate to:
+- **Overview Dashboard**: `http://127.0.0.1:5000/`
+- **Revenue Analytics**: `http://127.0.0.1:5000/revenue`
+- **Category Intelligence**: `http://127.0.0.1:5000/categories`
+- **Regional Performance**: `http://127.0.0.1:5000/regions`
+- **Executive Audit & Reports**: `http://127.0.0.1:5000/reports`
 
 ---
 
-## 9. Running Automated Tests
+## 10. Automated Test Suite (pytest)
 
-Run the complete test suite using `pytest`:
+Run the automated test suite to verify database integrity, KPI calculations, and API routes:
 
 ```powershell
 py -m pytest -v
 ```
 
-### Expected Output:
+### Test Suite Execution Output
 ```
 ============================= test session starts =============================
 platform win32 -- Python 3.14.7, pytest-9.1.1
@@ -299,79 +327,59 @@ tests/test_kpis.py::test_growth_rate_zero_denominator PASSED             [ 88%]
 tests/test_kpis.py::test_monthly_and_category_aggregation PASSED         [ 94%]
 tests/test_kpis.py::test_clean_and_validate_edge_cases PASSED            [100%]
 
-============================= 18 passed in 1.23s ==============================
+============================= 18 passed in 1.15s ==============================
 ```
 
 ---
 
-## 10. Generating Static Reports (Matplotlib)
+## 11. Publication-Grade Charts Engine (Matplotlib)
 
-To re-run the offline data processing and static chart generation pipeline:
+To re-run the offline data analysis pipeline and regenerate the high-resolution static charts:
 
 ```powershell
-# 1. Run Data Validation & Cleaning
+# 1. Clean and validate dataset
 py analysis/clean_data.py
 
-# 2. Run KPI Calculation Engine
+# 2. Compute aggregated summaries
 py analysis/calculate_kpis.py
 
-# 3. Generate High-Resolution Matplotlib Visualizations
+# 3. Generate uniform 16:9 widescreen chart artifacts
 py analysis/generate_charts.py
 ```
 
-The resulting chart artifacts will be saved in `analysis/outputs/`:
-- `monthly_revenue_trend.png`
-- `category_revenue_distribution.png`
-- `regional_performance.png`
-- `order_status_breakdown.png`
-- `period_comparison.png`
+### Exported Publication Visualizations
+All charts are exported at 300 DPI with a standardized **16:9 widescreen ratio (3000 × 1687 pixels)** in `analysis/outputs/`:
+1. `monthly_revenue_trend.png` — 14-month realized net sales trend with peak annotations.
+2. `category_revenue_distribution.png` — Horizontal Pareto bar chart showing net sales across verticals.
+3. `regional_performance.png` — Geographical distribution comparing territorial revenue and order count.
+4. `order_status_breakdown.png` — Proportional doughnut visualization of fulfillment distribution.
+5. `period_comparison.png` — Side-by-side grouped bar comparison between H1 2025 and H2 2025.
 
 ---
 
-## 11. Troubleshooting
+## 12. Troubleshooting Guide
 
-| Issue | Cause | Solution |
+| Issue Observed | Root Cause | Solution |
 | :--- | :--- | :--- |
-| `python was not found` | Windows Store app alias priority. | Use `py` command instead of `python` (e.g. `py backend/app.py`). |
-| `UnicodeEncodeError: 'charmap'` | Windows default code page 1252 printing `₹`. | Handled automatically in codebase via `sys.stdout.reconfigure(encoding='utf-8')`. |
-| `Address already in use (Port 5000)` | Another process is occupying port 5000. | Change `PORT=5050` in `.env` or run `py -c "from backend.app import app; app.run(port=5050)"`. |
-| Empty charts on load | Database not populated. | Run `py database/init_db.py --force` to regenerate sample data. |
+| `python was not found` | Windows Store app alias precedence. | Use the standard Windows Python launcher `py` (e.g. `py backend/app.py`). |
+| `Address already in use: Port 5000` | Port 5000 is occupied by another process. | Change port in `.env` or run `py -c "from backend.app import app; app.run(port=5050)"`. |
+| Empty charts or tables in UI | Database not yet initialized. | Run `py database/init_db.py --force` to populate `cartcompass.db`. |
+| Browser shows stale styles or charts | Browser HTTP asset caching. | Press `Ctrl + F5` (or `Cmd + Shift + R`) to force a hard refresh. |
+| PowerShell script activation error | Restricted script execution policy. | Run `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned`. |
 
 ---
 
-## 12. Publishing to GitHub
+## 13. Academic Review & Portfolio Checklist
 
-To push this repository to your personal GitHub account:
-
-```powershell
-# Check current git status
-git status
-
-# Add all project files
-git add .
-
-# Create initial commit
-git commit -m "feat: complete CartCompass-BI dashboard implementation"
-
-# Add your GitHub remote repository
-git remote add origin https://github.com/<YOUR_USERNAME>/CartCompass-BI.git
-
-# Set default branch and push
-git branch -M main
-git push -u origin main
-```
+- [x] **Relational Schema Integrity**: Enforced foreign keys, check constraints, and non-negative line item pricing.
+- [x] **Analytical Rigor**: Strict GAAP cash realization policy (cancelled orders excluded, returns deducted).
+- [x] **Executive UI/UX**: Multi-page dark terminal aesthetic, responsive navigation, and dual-currency toggle.
+- [x] **Publication Artifacts**: 5 uniform 16:9 Matplotlib charts exported at 300 DPI.
+- [x] **Automated Testing**: 18 automated tests passing via `pytest`.
+- [x] **Documentation**: Clean README, mathematical derivations (`KPI_DEFINITIONS.md`), and MIT License.
 
 ---
 
-## 13. Future Roadmap
+## 14. License
 
-- [ ] Export executive summary reports to PDF.
-- [ ] Add inventory re-order alerts based on stock depletion velocity.
-- [ ] Add multi-year comparative forecast modeling using statsmodels/ARIMA.
-- [ ] User role-based access control (Admin vs Analyst).
-
----
-
-## License
-
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for complete details.
