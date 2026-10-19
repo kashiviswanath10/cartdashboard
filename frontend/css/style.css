@@ -53,7 +53,9 @@
 }
 
 /* Reset */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -333,7 +335,8 @@ body {
     transition: all var(--transition);
 }
 
-.filter-pill:hover, .filter-pill:focus {
+.filter-pill:hover,
+.filter-pill:focus {
     border-color: var(--brand-orange);
     color: var(--text-white);
 }
@@ -486,7 +489,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.68rem;
+    font-size: 0.48rem;
     font-weight: 800;
     color: var(--accent-cyan);
 }
@@ -859,6 +862,200 @@ body {
 }
 
 /* ===================================================================
+   Upload & Ingestion View Components
+   =================================================================== */
+.upload-dropzone {
+    border: 2px dashed rgba(255, 107, 0, 0.45);
+    background: rgba(255, 107, 0, 0.03);
+    border-radius: var(--radius-lg);
+    padding: 40px 24px;
+    text-align: center;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.upload-dropzone:hover,
+.upload-dropzone.drag-active {
+    border-color: var(--brand-orange);
+    background: rgba(255, 107, 0, 0.08);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(255, 107, 0, 0.15);
+}
+
+.upload-icon-circle {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(255, 107, 0, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--brand-orange);
+    margin-bottom: 16px;
+    transition: transform var(--transition-fast);
+}
+
+.upload-dropzone:hover .upload-icon-circle {
+    transform: scale(1.08);
+}
+
+.upload-title {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-white);
+    margin-bottom: 6px;
+}
+
+.upload-hint {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    max-width: 480px;
+    margin-bottom: 16px;
+    line-height: 1.5;
+}
+
+.file-selected-badge {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    background: rgba(0, 210, 211, 0.12);
+    border: 1px solid var(--accent-cyan);
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    color: var(--accent-cyan);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.upload-actions-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.schema-table-wrapper {
+    overflow-x: auto;
+    margin-top: 12px;
+}
+
+.schema-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.80rem;
+}
+
+.schema-table th {
+    text-align: left;
+    padding: 10px 12px;
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--text-secondary);
+    font-weight: 700;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.schema-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    color: var(--text-muted);
+}
+
+.schema-table code {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--accent-cyan);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 0.82rem;
+}
+
+.req-badge {
+    font-size: 0.70rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.req-badge.required {
+    background: rgba(244, 63, 94, 0.15);
+    color: var(--accent-rose);
+}
+
+.req-badge.optional {
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--accent-emerald);
+}
+
+.upload-status-box {
+    display: none;
+    padding: 16px 20px;
+    border-radius: var(--radius-md);
+    margin-top: 18px;
+    border: 1px solid transparent;
+}
+
+.upload-status-box.active {
+    display: block;
+}
+
+.upload-status-box.success {
+    background: rgba(16, 185, 129, 0.08);
+    border-color: rgba(16, 185, 129, 0.35);
+}
+
+.upload-status-box.error {
+    background: rgba(244, 63, 94, 0.08);
+    border-color: rgba(244, 63, 94, 0.35);
+}
+
+.upload-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-top: 14px;
+}
+
+.summary-stat-card {
+    background: rgba(18, 25, 43, 0.8);
+    border: 1px solid var(--border-subtle);
+    padding: 12px;
+    border-radius: var(--radius-sm);
+}
+
+.summary-stat-label {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.summary-stat-val {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--text-white);
+    margin-top: 3px;
+}
+
+.quick-nav-links {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+}
+
+/* ===================================================================
    Print Styles (for Page 5 Reports print view)
    =================================================================== */
 @media print {
@@ -867,7 +1064,11 @@ body {
         color: #000000 !important;
     }
 
-    .sidebar, .top-header .header-right, .btn, .mobile-toggle, .filter-pill {
+    .sidebar,
+    .top-header .header-right,
+    .btn,
+    .mobile-toggle,
+    .filter-pill {
         display: none !important;
     }
 
@@ -877,7 +1078,9 @@ body {
         max-width: 100% !important;
     }
 
-    .card, .kpi-card, .rule-box {
+    .card,
+    .kpi-card,
+    .rule-box {
         background-color: #ffffff !important;
         border: 1px solid #cccccc !important;
         box-shadow: none !important;
@@ -885,11 +1088,14 @@ body {
         page-break-inside: avoid;
     }
 
-    .kpi-value, .card-title-group h3, .rule-box h4 {
+    .kpi-value,
+    .card-title-group h3,
+    .rule-box h4 {
         color: #000000 !important;
     }
 
-    .data-table th, .data-table td {
+    .data-table th,
+    .data-table td {
         border-color: #dddddd !important;
         color: #000000 !important;
     }
@@ -899,7 +1105,9 @@ body {
    Responsive Media Queries
    =================================================================== */
 @media (max-width: 1100px) {
-    .charts-grid-2, .charts-grid-3 {
+
+    .charts-grid-2,
+    .charts-grid-3 {
         grid-template-columns: 1fr;
     }
 }

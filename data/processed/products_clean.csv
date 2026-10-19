@@ -1,29 +1,18 @@
-product_id,product_name,category
-1,Wireless Noise-Cancelling Headphones,Electronics
-2,"Ultra HD 4K Smart TV 43""",Electronics
-3,Mechanical Gaming Keyboard,Electronics
-4,Ergonomic Wireless Mouse,Electronics
-5,Fast Charging Power Bank 20000mAh,Electronics
-6,Portable Bluetooth Speaker,Electronics
-7,Digital Air Fryer 4.5L,Home & Kitchen
-8,Stainless Steel Cookware Set (5-Piece),Home & Kitchen
-9,Robotic Vacuum Cleaner,Home & Kitchen
-10,Electric Kettle 1.8L Stainless Steel,Home & Kitchen
-11,High-Speed Nutri-Blender 1000W,Home & Kitchen
-12,Orthopedic Memory Foam Pillow,Home & Kitchen
-13,Men's Stretch Slim Fit Chinos,Fashion & Apparel
-14,Women's Pure Cotton Printed Kurti,Fashion & Apparel
-15,Premium Washed Denim Jacket,Fashion & Apparel
-16,Lightweight Breathable Running Shoes,Fashion & Apparel
-17,Polarized Aviator Sunglasses,Fashion & Apparel
-18,Genuine Full-Grain Leather Belt,Fashion & Apparel
-19,Vitamin C Brightening Face Serum 30ml,Beauty & Personal Care
-20,Organic Moroccan Argan Oil Shampoo,Beauty & Personal Care
-21,Sonic Electric Toothbrush Rechargeable,Beauty & Personal Care
-22,Oil-Free Hydrating Gel Moisturizer,Beauty & Personal Care
-23,Complete Beard Care & Grooming Kit,Beauty & Personal Care
-24,Anti-Skid Eco-Friendly Yoga Mat 6mm,Sports & Fitness
-25,Adjustable Quick-Select Dumbbell Set 20kg,Sports & Fitness
-26,Insulated Stainless Steel Protein Shaker,Sports & Fitness
-27,Heavy-Duty Resistance Loop Bands Set,Sports & Fitness
-28,Waterproof Smart Fitness Tracker Band,Sports & Fitness
+product_name,category,product_id
+Yoga Mat with Alignment Lines,Sports & Fitness,1
+Ergonomic Wireless Mouse,Electronics,2
+Women's Floral Maxi Dress,Fashion & Apparel,3
+Bluetooth Running Earbuds,Electronics,4
+Non-Stick Cookware Set,Home & Kitchen,5
+Genuine Full-Grain Leather Belt,Fashion & Apparel,6
+Fast Charging Power Bank 20000mAh,Electronics,7
+Mechanical Gaming Keyboard,Electronics,8
+Cotton King Size Bedsheet,Home & Kitchen,9
+Wireless Noise-Cancelling Headphones,Electronics,10
+Adjustable Dumbbells 10kg,Sports & Fitness,11
+Digital Air Fryer 4.5L,Home & Kitchen,12
+Ceramic Coffee Mugs (Set of 4),Home & Kitchen,13
+Men's Casual Sneakers,Fashion & Apparel,14
+Smart LED TV 43-inch,Electronics,15
+Stainless Steel Water Bottle,Home & Kitchen,16
+Men's Stretch Slim Fit Chinos,Fashion & Apparel,17

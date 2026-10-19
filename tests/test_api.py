@@ -257,3 +257,19 @@ def test_nonexistent_api_endpoint_404(client):
     assert res.status_code == 404
     json_data = res.get_json()
     assert json_data["status"] == "error"
+
+
+def test_sample_template_download(client):
+    """Verify GET /api/template/sample-csv returns sample CSV file."""
+    res = client.get("/api/template/sample-csv")
+    assert res.status_code == 200
+    assert "text/csv" in res.content_type
+    assert len(res.data) > 0
+
+
+def test_upload_missing_file_error(client):
+    """Verify 400 error when POST /api/upload is called without a file."""
+    res = client.post("/api/upload", data={})
+    assert res.status_code == 400
+    assert res.get_json()["status"] == "error"
+

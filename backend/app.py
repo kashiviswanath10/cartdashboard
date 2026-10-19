@@ -19,6 +19,7 @@ from backend.routes.kpis import kpis_bp
 from backend.routes.revenue import revenue_bp
 from backend.routes.categories import categories_bp
 from backend.routes.regions import regions_bp
+from backend.routes.upload import upload_bp
 from backend.services.analytics import get_status_distribution
 
 
@@ -42,6 +43,7 @@ def create_app(config_class=Config):
     app.register_blueprint(revenue_bp, url_prefix="/api")
     app.register_blueprint(categories_bp, url_prefix="/api")
     app.register_blueprint(regions_bp, url_prefix="/api")
+    app.register_blueprint(upload_bp, url_prefix="/api")
 
     # Health Check Endpoint
     @app.route("/api/health", methods=["GET"])
@@ -129,6 +131,10 @@ def create_app(config_class=Config):
     @app.route("/reports", methods=["GET"])
     def serve_reports():
         return send_from_directory(str(app.config.get("FRONTEND_DIR", BASE_DIR / "frontend")), "reports.html")
+
+    @app.route("/upload", methods=["GET"])
+    def serve_upload():
+        return send_from_directory(str(app.config.get("FRONTEND_DIR", BASE_DIR / "frontend")), "upload.html")
 
     # Static frontend files (HTML pages, CSS, JS, Assets)
     @app.route("/<path:path>", methods=["GET"])
