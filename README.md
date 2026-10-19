@@ -24,13 +24,14 @@ CartCompass-BI analyzes high-level store performance through real-time Key Perfo
 5. [Folder Structure](#5-folder-structure)
 6. [Database Design & Performance Indexes](#6-database-design--performance-indexes)
 7. [Business Intelligence KPIs & Mathematical Formulations](#7-business-intelligence-kpis--mathematical-formulations)
-8. [Installation & Setup (Windows PowerShell)](#8-installation--setup-windows-powershell)
-9. [Running the Application](#9-running-the-application)
-10. [Automated Test Suite (pytest)](#10-automated-test-suite-pytest)
-11. [Publication-Grade Charts Engine (Matplotlib)](#11-publication-grade-charts-engine-matplotlib)
-12. [Troubleshooting Guide](#12-troubleshooting-guide)
-13. [Academic Review & Portfolio Checklist](#13-academic-review--portfolio-checklist)
-14. [License](#14-license)
+8. [Dynamic CSV Ingestion & Schema Specification](#8-dynamic-csv-ingestion--schema-specification)
+9. [Installation & Setup (Windows PowerShell)](#9-installation--setup-windows-powershell)
+10. [Running the Application](#10-running-the-application)
+11. [Automated Test Suite (pytest)](#11-automated-test-suite-pytest)
+12. [Publication-Grade Charts Engine (Matplotlib)](#12-publication-grade-charts-engine-matplotlib)
+13. [Troubleshooting Guide](#13-troubleshooting-guide)
+14. [Academic Review & Portfolio Checklist](#14-academic-review--portfolio-checklist)
+15. [License](#15-license)
 
 ---
 
@@ -238,7 +239,57 @@ CartCompass-BI implements strict accounting and business rules:
 
 ---
 
-## 8. Installation & Setup (Windows PowerShell)
+## 8. Dynamic CSV Ingestion & Schema Specification
+
+CartCompass-BI includes a high-throughput, fault-tolerant dataset ingestion engine (`backend/routes/upload.py`) that accepts custom transaction files (`.csv`, `.tsv`), validates field constraints, normalizes schemas, repopulates relational tables, and triggers immediate KPI and chart recomputation.
+
+### Ingestion Workflow
+```
+[ User Uploads CSV ]
+        │
+        ▼
+[ Header Synonym Normalization ]  ──> Auto-maps flexible column headers
+        │
+        ▼
+[ Schema & Type Validation ]      ──> Enforces positive prices/quantities & valid dates
+        │
+        ▼
+[ Relational Ingestion Engine ]   ──> Normalizes data into products, orders, order_items
+        │
+        ▼
+[ Automated Analytics Pipeline ]  ──> Executes clean_data.py, calculate_kpis.py, generate_charts.py
+        │
+        ▼
+[ Asset Sync & Instant Refresh ]  ──> Widescreen 16:9 charts updated; UI reloads with live metrics
+```
+
+### Supported CSV Schema & Auto-Detected Synonyms
+
+The ingestion pipeline automatically maps common industry column variants into internal schema attributes:
+
+| Internal Field | Accepted Header Synonyms | Format / Constraints |
+| :--- | :--- | :--- |
+| `order_id` | `order_id`, `order id`, `order`, `orderid`, `transaction_id`, `order_number`, `id` | Unique alphanumeric / integer identifier |
+| `order_date` | `order_date`, `order date`, `date`, `orderdate`, `transaction_date`, `created_at` | ISO `YYYY-MM-DD` or standard date format |
+| `order_status` | `order_status`, `order status`, `status`, `fulfillment_status`, `state` | `delivered`, `shipped`, `pending`, `cancelled` |
+| `region` | `region`, `hub`, `territory`, `location`, `zone`, `area`, `city` | Geographic hub (e.g. `North`, `South`, `East`, `West`, `Central`) |
+| `product_name` | `product_name`, `product name`, `product`, `item_name`, `item`, `title` | Product title text string |
+| `category` | `category`, `product_category`, `catalog`, `vertical`, `department` | Vertical classification text string |
+| `quantity` | `quantity`, `qty`, `units`, `count`, `volume`, `qty_sold` | Integer > 0 |
+| `unit_price` | `unit_price`, `unit price`, `price`, `selling_price`, `amount`, `rate` | Numerical float >= 0 |
+| `discount` | `discount`, `discount_amount`, `promo`, `rebate`, `concession` | Numerical float >= 0 (default: `0.0`) |
+| `return_amount`| `return_amount`, `refund`, `refund_amount`, `returns`, `refunded` | Numerical float >= 0 (default: `0.0`) |
+
+### Sample Template Download
+Users can download a pre-formatted starter dataset template directly from the UI or via REST API:
+```http
+GET /api/template/sample-csv
+```
+A ready-to-use sample CSV file is also included in the repository at [`data/sample_ecommerce_data.csv`](data/sample_ecommerce_data.csv).
+
+---
+
+## 9. Installation & Setup (Windows PowerShell)
 
 ### Prerequisites
 - Windows 10 or 11
@@ -271,7 +322,7 @@ py -m pip install -r requirements.txt
 
 ---
 
-## 9. Running the Application
+## 10. Running the Application
 
 ### Step 1: Initialize the SQLite Database
 ```powershell
@@ -302,7 +353,7 @@ Open your browser and navigate to:
 
 ---
 
-## 10. Automated Test Suite (pytest)
+## 11. Automated Test Suite (pytest)
 
 Run the automated test suite to verify database integrity, KPI calculations, and API routes:
 
@@ -342,7 +393,7 @@ tests/test_kpis.py::test_clean_and_validate_edge_cases PASSED            [100%]
 
 ---
 
-## 11. Publication-Grade Charts Engine (Matplotlib)
+## 12. Publication-Grade Charts Engine (Matplotlib)
 
 To re-run the offline data analysis pipeline and regenerate the high-resolution static charts:
 
@@ -367,7 +418,7 @@ All charts are exported at 300 DPI with a standardized **16:9 widescreen ratio (
 
 ---
 
-## 12. Troubleshooting Guide
+## 13. Troubleshooting Guide
 
 | Issue Observed | Root Cause | Solution |
 | :--- | :--- | :--- |
@@ -379,7 +430,7 @@ All charts are exported at 300 DPI with a standardized **16:9 widescreen ratio (
 
 ---
 
-## 13. Academic Review & Portfolio Checklist
+## 14. Academic Review & Portfolio Checklist
 
 - [x] **Relational Schema Integrity**: Enforced foreign keys, check constraints, and non-negative line item pricing.
 - [x] **Analytical Rigor**: Strict GAAP cash realization policy (cancelled orders excluded, returns deducted).
@@ -391,6 +442,6 @@ All charts are exported at 300 DPI with a standardized **16:9 widescreen ratio (
 
 ---
 
-## 14. License
+## 15. License
 
 This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for complete details.
