@@ -5,12 +5,12 @@
 [![SQLite](https://img.shields.io/badge/SQLite-3-003B57?logo=sqlite&logoColor=white)](https://www.sqlite.org/)
 [![Pandas](https://img.shields.io/badge/Pandas-2.0%2B-150458?logo=pandas&logoColor=white)](https://pandas.pydata.org/)
 [![Chart.js](https://img.shields.io/badge/Chart.js-4.4-FF6384?logo=chartdotjs&logoColor=white)](https://www.chartjs.org/)
-[![Tests](https://img.shields.io/badge/Tests-18%20Passed-10b981?logo=pytest&logoColor=white)](https://docs.pytest.org/)
+[![Tests](https://img.shields.io/badge/Tests-20%20Passed-10b981?logo=pytest&logoColor=white)](https://docs.pytest.org/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 An executive, multi-page **E-Commerce Business Intelligence (BI) Dashboard** engineered for management performance reviews, academic project evaluations, and GitHub portfolio showcases.
 
-CartCompass-BI analyzes high-level store performance through real-time Key Performance Indicators (KPIs), multi-year monthly revenue cash flows, product category contributions, geographical delivery territory analytics, period-over-period baseline growth rates, and automated narrative executive insights.
+CartCompass-BI analyzes high-level store performance through real-time Key Performance Indicators (KPIs), multi-year monthly revenue cash flows, product category contributions, geographical delivery territory analytics, period-over-period baseline growth rates, dynamic CSV dataset upload/recalculation, and automated narrative executive insights.
 
 > **Notice:** All transaction records in this repository are generated through a deterministic, reproducible synthetic e-commerce data pipeline (`seed=42`). The data does not represent any real-world commercial entity.
 
@@ -36,7 +36,7 @@ CartCompass-BI analyzes high-level store performance through real-time Key Perfo
 
 ## 1. Executive Dashboard Pages
 
-CartCompass-BI is structured as a cohesive, 5-page enterprise analytics application:
+CartCompass-BI is structured as a cohesive, 6-page enterprise analytics application:
 
 | Page | URL Route | Description & Visualizations |
 | :--- | :--- | :--- |
@@ -45,6 +45,7 @@ CartCompass-BI is structured as a cohesive, 5-page enterprise analytics applicat
 | **3. Categories** | `/categories` or `/categories.html` | **Merchandise Portfolio**: Top-performing vertical highlights (by net revenue and unit volume), horizontal bar comparisons with value callouts, portfolio percentage share doughnut, and complete vertical performance audit table with YoY growth. |
 | **4. Regions** | `/regions` or `/regions.html` | **Geographical Logistics**: Leading territorial hub metrics, revenue volume horizontal bar chart, dual-axis territory comparison (AOV vs. Order Volume), and regional delivery efficiency table with target pacing. |
 | **5. Reports & Audit** | `/reports` or `/reports.html` | **Formal Management Audit**: 7 executive KPI cards, data-driven narrative takeaway boxes, fulfillment status distribution doughnut, publication-grade Matplotlib static chart gallery (16:9 uniform widescreen ratio), formal KPI mathematical equations, and one-click Print / Export to PDF. |
+| **6. Upload Data** | `/upload` or `/upload.html` | **Dynamic Data Ingestion**: Drag-and-drop CSV dataset ingestion pipeline with batch validation, SQLite database updates, automated recomputation of all store KPIs and analytical charts, and downloadable sample CSV templates. |
 
 ---
 
@@ -77,7 +78,7 @@ The frontend features a bespoke executive dark theme styled after high-end marke
 | **Relational Database** | SQLite 3 (`sqlite3`) | Embedded SQL database with foreign key enforcement and multi-column indexes. |
 | **Data Analysis** | Pandas 2.0+, NumPy | Data cleaning pipeline, aggregate KPI formulations, and cohort transformations. |
 | **Static Reporting** | Matplotlib 3.11 | Headless static chart generation exporting uniform 16:9 publication PNGs. |
-| **Test Suite** | pytest 9.1 | 18 automated unit and integration tests with isolated SQLite fixtures. |
+| **Test Suite** | pytest 9.1 | 20 automated unit and integration tests with isolated SQLite fixtures. |
 
 ---
 
@@ -88,14 +89,16 @@ CartCompass-BI implements a decoupled, 3-tier architecture:
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
 │             Presentation Tier (HTML5, Modern CSS3, JavaScript)         │
-│  - 5 Multi-Page Views   - Dark Theme System   - Chart.js Visualizations│
+│  - 6 Multi-Page Views   - Dark Theme System   - Chart.js Visualizations│
 │  - ₹ / $ Currency Engine - Live Status Pill    - Print-to-PDF Styles    │
+│  - Drag-and-Drop Ingestion UI                  - Real-Time Recalculation│
 └───────────────────────────────────▲────────────────────────────────────┘
                                     │ JSON REST API / Static Assets
 ┌───────────────────────────────────▼────────────────────────────────────┐
 │                    Flask API Tier (backend/app.py)                     │
 │  - /api/health          - /api/kpis           - /api/revenue/monthly   │
 │  - /api/categories      - /api/regions        - /api/status-distribution│
+│  - /api/upload          - /api/template/sample-csv                     │
 │  - /api/chart-images/*  - Clean URL Routing   - Parameter Validation   │
 └───────────────────────────────────▲────────────────────────────────────┘
                                     │ Parameterized SQL Queries
@@ -123,6 +126,7 @@ CartCompass-BI/
 │   ├── categories.html             # Page 3: Category Performance & Share
 │   ├── regions.html                # Page 4: Regional Logistics & Hubs
 │   ├── reports.html                # Page 5: Executive Audit & Reports
+│   ├── upload.html                 # Page 6: Dynamic CSV Upload & Ingestion Engine
 │   ├── assets/                     # Static client-side assets
 │   │   └── charts/                 # Synchronized 16:9 publication charts
 │   ├── css/
@@ -133,7 +137,8 @@ CartCompass-BI/
 │       ├── revenue.js              # Revenue analytics controllers
 │       ├── categories.js           # Category breakdown controllers
 │       ├── regions.js              # Regional performance controllers
-│       └── reports.js              # Executive audit, insights & print handlers
+│       ├── reports.js              # Executive audit, insights & print handlers
+│       └── upload.js               # CSV drag/drop, batch upload & recalculation handler
 ├── backend/                        # Server application layer
 │   ├── app.py                      # Application factory & clean URL router
 │   ├── config.py                   # Configuration defaults & environment settings
@@ -142,7 +147,8 @@ CartCompass-BI/
 │   │   ├── kpis.py                 # GET /api/kpis
 │   │   ├── revenue.py              # GET /api/revenue/monthly & /api/revenue/growth
 │   │   ├── categories.py           # GET /api/categories
-│   │   └── regions.py              # GET /api/regions
+│   │   ├── regions.py              # GET /api/regions
+│   │   └── upload.py               # POST /api/upload & GET /api/template/sample-csv
 │   └── services/
 │       └── analytics.py            # KPI business logic & SQL query formulations
 ├── database/                       # Relational schema and seed scripts
@@ -155,7 +161,8 @@ CartCompass-BI/
 │   └── outputs/                    # Exported high-res PNG static charts (300 DPI)
 ├── data/                           # Data storage
 │   ├── raw/                        # Generated raw CSV datasets
-│   └── processed/                  # Cleaned master tables & JSON/CSV summaries
+│   ├── processed/                  # Cleaned master tables & JSON/CSV summaries
+│   └── sample_ecommerce_data.csv   # Template sample CSV file for batch imports
 ├── tests/                          # Automated verification suite
 │   ├── test_kpis.py                # Unit tests for KPI calculations & edge cases
 │   └── test_api.py                 # Integration tests for Flask endpoints & DB
@@ -291,6 +298,7 @@ Open your browser and navigate to:
 - **Category Intelligence**: `http://127.0.0.1:5000/categories`
 - **Regional Performance**: `http://127.0.0.1:5000/regions`
 - **Executive Audit & Reports**: `http://127.0.0.1:5000/reports`
+- **Dynamic Upload & Ingestion**: `http://127.0.0.1:5000/upload`
 
 ---
 
@@ -306,28 +314,30 @@ py -m pytest -v
 ```
 ============================= test session starts =============================
 platform win32 -- Python 3.14.7, pytest-9.1.1
-collected 18 items
+collected 20 items
 
 tests/test_api.py::test_foreign_key_enforcement PASSED                   [  5%]
-tests/test_api.py::test_health_endpoint PASSED                           [ 11%]
-tests/test_api.py::test_kpis_endpoint PASSED                             [ 16%]
-tests/test_api.py::test_kpis_date_filtering PASSED                       [ 22%]
-tests/test_api.py::test_monthly_revenue_endpoint PASSED                  [ 27%]
-tests/test_api.py::test_categories_endpoint PASSED                       [ 33%]
-tests/test_api.py::test_regions_endpoint PASSED                          [ 38%]
-tests/test_api.py::test_revenue_growth_endpoint PASSED                   [ 44%]
-tests/test_api.py::test_status_distribution_endpoint PASSED              [ 50%]
-tests/test_api.py::test_invalid_date_validation_error PASSED             [ 55%]
-tests/test_api.py::test_nonexistent_api_endpoint_404 PASSED              [ 61%]
-tests/test_kpis.py::test_gross_and_net_sales_calculation PASSED          [ 66%]
-tests/test_kpis.py::test_cancelled_order_exclusion PASSED                [ 72%]
-tests/test_kpis.py::test_distinct_order_counting PASSED                  [ 77%]
-tests/test_kpis.py::test_average_order_value PASSED                      [ 83%]
-tests/test_kpis.py::test_growth_rate_zero_denominator PASSED             [ 88%]
-tests/test_kpis.py::test_monthly_and_category_aggregation PASSED         [ 94%]
+tests/test_api.py::test_health_endpoint PASSED                           [ 10%]
+tests/test_api.py::test_kpis_endpoint PASSED                             [ 15%]
+tests/test_api.py::test_kpis_date_filtering PASSED                       [ 20%]
+tests/test_api.py::test_monthly_revenue_endpoint PASSED                  [ 25%]
+tests/test_api.py::test_categories_endpoint PASSED                       [ 30%]
+tests/test_api.py::test_regions_endpoint PASSED                          [ 35%]
+tests/test_api.py::test_revenue_growth_endpoint PASSED                   [ 40%]
+tests/test_api.py::test_status_distribution_endpoint PASSED              [ 45%]
+tests/test_api.py::test_invalid_date_validation_error PASSED             [ 50%]
+tests/test_api.py::test_nonexistent_api_endpoint_404 PASSED              [ 55%]
+tests/test_api.py::test_sample_template_download PASSED                  [ 60%]
+tests/test_api.py::test_upload_missing_file_error PASSED                 [ 65%]
+tests/test_kpis.py::test_gross_and_net_sales_calculation PASSED          [ 70%]
+tests/test_kpis.py::test_cancelled_order_exclusion PASSED                [ 75%]
+tests/test_kpis.py::test_distinct_order_counting PASSED                  [ 80%]
+tests/test_kpis.py::test_average_order_value PASSED                      [ 85%]
+tests/test_kpis.py::test_growth_rate_zero_denominator PASSED             [ 90%]
+tests/test_kpis.py::test_monthly_and_category_aggregation PASSED         [ 95%]
 tests/test_kpis.py::test_clean_and_validate_edge_cases PASSED            [100%]
 
-============================= 18 passed in 1.15s ==============================
+============================= 20 passed in 2.26s ==============================
 ```
 
 ---
@@ -374,8 +384,9 @@ All charts are exported at 300 DPI with a standardized **16:9 widescreen ratio (
 - [x] **Relational Schema Integrity**: Enforced foreign keys, check constraints, and non-negative line item pricing.
 - [x] **Analytical Rigor**: Strict GAAP cash realization policy (cancelled orders excluded, returns deducted).
 - [x] **Executive UI/UX**: Multi-page dark terminal aesthetic, responsive navigation, and dual-currency toggle.
+- [x] **Dynamic Data Ingestion**: Drag-and-drop CSV dataset ingestion, batch validation, automated KPI recomputation, and sample template export.
 - [x] **Publication Artifacts**: 5 uniform 16:9 Matplotlib charts exported at 300 DPI.
-- [x] **Automated Testing**: 18 automated tests passing via `pytest`.
+- [x] **Automated Testing**: 20 automated tests passing via `pytest`.
 - [x] **Documentation**: Clean README, mathematical derivations (`KPI_DEFINITIONS.md`), and MIT License.
 
 ---
